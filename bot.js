@@ -30,7 +30,7 @@ function respond() {
 		var mess = JSON.parse(data).response.messages;
 		for(i = 0; i < mess.length; i++){
 			if(mess[i].attachments.length){
-				for( j = 0; j < mess[i].attachements.length; j++){
+				for( j = 0; j < mess[i].attachments.length; j++){
 					if (mess[i].attachments[j].type == "image"){
 						console.log(mess[i].attachments[j].url);
 					}
