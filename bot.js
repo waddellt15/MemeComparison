@@ -12,8 +12,8 @@ function respond() {
 	var att = request.attachments[0].url;
 	console.log(att);
 	options = {
-		hostname: 'api.groupme.com/v3',
-		path: '/groups',
+		hostname: 'api.groupme.com',
+		path: '/v3/groups',
 		method: 'GET'
 	};
 
@@ -31,6 +31,9 @@ function respond() {
 		console.log('timeout posting message '  + JSON.stringify(err));
 	});
 	console.log(botReq);
+	botReq.on('data', (d) => {
+    process.stdout.write(d);
+  });
   }
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
