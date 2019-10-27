@@ -4,10 +4,14 @@ var cool = require('cool-ascii-faces');
 var botID = "0b09c5795270482bb28ecfb5ef";
 
 function respond() {
-  console.log(this.req.chunks[0]);
   var request = JSON.parse(this.req.chunks[0]),
       botRegex = /^\/cool guy$/;
-
+  console.log(request.attachments);
+  if(request.attachments){
+  console.log("thisworks");
+  var att = JSON.parse(request.attachments[1]);
+  console.log(att.url);
+  }
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
     postMessage();
