@@ -8,7 +8,6 @@ function respond() {
       botRegex = /^\/cool guy$/;
   console.log(request.attachments);
   if(Array.isArray(request.attachments) && request.attachments.length){
-	console.log("thisworks");
 	var att = request.attachments[0].url;
 	console.log(att);
 	options = {
@@ -18,6 +17,7 @@ function respond() {
 	};
 
 	botReq = HTTPS.request(options, function(res) {
+		console.log("thisworks");
 		if(res.statusCode == 202) {
 			//neat
 		} else {
