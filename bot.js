@@ -15,10 +15,9 @@ function respond() {
 		path: '/v3/groups',
 		method: 'GET'
 	};
-
-	botReq = HTTPS.request(options, function(res) {
-		console.log("thisworks");
-		if(res.statusCode == 202) {
+	HTTPS.get('https://api.groupme.com/v3/groups?token=c2b94360da7f013732bc364efad1a7ec', function(res) {
+		console.log("thisworls");
+			if(res.statusCode == 202) {
 			//neat
 		} else {
 			console.log('rejecting bad status code ' + res.statusCode);
@@ -27,15 +26,7 @@ function respond() {
 			console.log(chunk);
 		});
 	});
-	botReq.on('error', function(err) {
-	    console.log('error posting message '  + JSON.stringify(err));
-	});
-	botReq.on('timeout', function(err) {
-		console.log('timeout posting message '  + JSON.stringify(err));
-	});
-	botReq.on('end', function(){
-		console.log(botReq.data);
-	});
+	
   }
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
