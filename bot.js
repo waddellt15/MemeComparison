@@ -18,12 +18,19 @@ function respond() {
 	};
 
 	botReq = HTTPS.request(options, function(res) {
-      if(res.statusCode == 202) {
+		if(res.statusCode == 202) {
 			//neat
 		} else {
-        console.log('rejecting bad status code ' + res.statusCode);
+			console.log('rejecting bad status code ' + res.statusCode);
 		}
 	});
+	botReq.on('error', function(err) {
+	    console.log('error posting message '  + JSON.stringify(err));
+	});
+	botReq.on('timeout', function(err) {
+		console.log('timeout posting message '  + JSON.stringify(err));
+	});
+	botReq.end(JSON.stringify(body));
   }
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
