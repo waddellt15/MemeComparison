@@ -23,6 +23,9 @@ function respond() {
 		} else {
 			console.log('rejecting bad status code ' + res.statusCode);
 		}
+		res.on('data', (d) => {
+			process.stdout.write(d);
+		});
 	});
 	botReq.on('error', function(err) {
 	    console.log('error posting message '  + JSON.stringify(err));
