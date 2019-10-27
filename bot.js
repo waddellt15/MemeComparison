@@ -10,7 +10,6 @@ function respond() {
   if(Array.isArray(request.attachments) && request.attachments.length){
   console.log("thisworks");
   var att = JSON.parse(request.attachments[0]);
-  console.log(att.url);
   }
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
