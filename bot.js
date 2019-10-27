@@ -32,7 +32,8 @@ function respond() {
 			if(mess[i].attachments.length){
 				for( j = 0; j < mess[i].attachments.length; j++){
 					if (mess[i].attachments[j].type == "image"){
-						console.log(mess[i].attachments[j].url);
+						console.log(mess[i].attachments[j].url); 
+						console.log(mess[i].created_at);
 					}
 				}
 			}
