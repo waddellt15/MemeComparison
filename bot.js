@@ -27,7 +27,10 @@ function respond() {
 			data += chunk;
 		});
 		res.on('end', function(){
-		console.log(JSON.parse(data));
+		var get = (JSON.parse(data);
+		for(i = 0; i < get.messages.length; i++){
+		console.log(get.messages[i];
+		}
 		});
 		
 	});
