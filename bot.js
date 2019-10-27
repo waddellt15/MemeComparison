@@ -8,9 +8,22 @@ function respond() {
       botRegex = /^\/cool guy$/;
   console.log(request.attachments);
   if(Array.isArray(request.attachments) && request.attachments.length){
-  console.log("thisworks");
-  var att = request.attachments[0].url;
-  console.log(att);
+	console.log("thisworks");
+	var att = request.attachments[0].url;
+	console.log(att);
+	options = {
+		hostname: 'api.groupme.com/v3',
+		path: '/groups',
+		method: 'GET'
+	};
+
+	botReq = HTTPS.request(options, function(res {
+      i	f(res.statusCode == 202) {
+			//neat
+		} else {
+        console.log('rejecting bad status code ' + res.statusCode);
+		}
+	}
   }
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
