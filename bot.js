@@ -9,7 +9,7 @@ function respond() {
   console.log(request.attachments);
   if(request.attachments){
   console.log("thisworks");
-  var att = JSON.parse(request.attachments[1]);
+  var att = JSON.parse(request.attachments[0]);
   console.log(att.url);
   }
   if(request.text && botRegex.test(request.text)) {
