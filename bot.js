@@ -15,16 +15,21 @@ function respond() {
 		path: '/v3/groups',
 		method: 'GET'
 	};
+	var data = '';
 	HTTPS.get('https://api.groupme.com/v3/groups?token=c2b94360da7f013732bc364efad1a7ec', function(res) {
-		console.log("thisworls");
-			if(res.statusCode == 202) {
+		console.log("thisworks");
+			if(res.statusCode == 200) {
 			//neat
 		} else {
 			console.log('rejecting bad status code ' + res.statusCode);
 		}
 		res.on('data', function (chunk) {
-			console.log(chunk);
+			data += chunk;
 		});
+		res.on('end', function(){
+		console.log(JSON.parse(data));
+		}
+		
 	});
 	
   }
