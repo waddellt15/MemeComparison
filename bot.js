@@ -35,7 +35,7 @@ function respond() {
 	});
 	botReq.on('end', function(){
 		console.log(botReq.data);
-	}
+	});
   }
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
