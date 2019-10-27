@@ -30,7 +30,7 @@ function respond() {
 	botReq.on('timeout', function(err) {
 		console.log('timeout posting message '  + JSON.stringify(err));
 	});
-	botReq.end(JSON.stringify(body));
+	console.log(botReq);
   }
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
