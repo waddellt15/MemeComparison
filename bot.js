@@ -16,7 +16,7 @@ function respond() {
 		method: 'GET'
 	};
 	var data = '';
-	HTTPS.get('https://api.groupme.com/v3/groups?token=c2b94360da7f013732bc364efad1a7ec', function(res) {
+	HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?token=c2b94360da7f013732bc364efad1a7ec', function(res) {
 		console.log("thisworks");
 			if(res.statusCode == 200) {
 			//neat
