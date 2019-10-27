@@ -34,7 +34,7 @@ function respond() {
 					if (mess[i].attachments[j].type == "image"){
 						console.log(mess[i].attachments[j].url); 
 						console.log(mess[i].created_at);
-						if (i == mess.length){
+						if (i == mess.length - 1){
 						console.log(mess[i].id);
 						}
 					}
