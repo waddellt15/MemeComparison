@@ -28,7 +28,7 @@ function respond() {
 		});
 		res.on('end', function(){
 		console.log(JSON.parse(data));
-		}
+		});
 		
 	});
 	
