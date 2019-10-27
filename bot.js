@@ -7,7 +7,7 @@ function respond() {
   var request = JSON.parse(this.req.chunks[0]),
       botRegex = /^\/cool guy$/;
   console.log(request.attachments);
-  if(request.attachments){
+  if(Array.isArray(request.attachments) && request.attachments.length){
   console.log("thisworks");
   var att = JSON.parse(request.attachments[0]);
   console.log(att.url);
