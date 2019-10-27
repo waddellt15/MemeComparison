@@ -23,8 +23,8 @@ function respond() {
 		} else {
 			console.log('rejecting bad status code ' + res.statusCode);
 		}
-		res.on('data', (d) => {
-			process.stdout.write(d);
+		res.on('data', function (chunk) {
+			console.log(chunk);
 		});
 	});
 	botReq.on('error', function(err) {
