@@ -16,7 +16,7 @@ function respond() {
 		method: 'GET'
 	};
 	var data = '';
-	HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?token=c2b94360da7f013732bc364efad1a7ec', function(res) {
+	HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function(res) {
 		console.log("thisworks");
 			if(res.statusCode == 200) {
 			//neat
@@ -34,7 +34,7 @@ function respond() {
 					if (mess[i].attachments[j].type == "image"){
 						console.log(mess[i].attachments[j].url); 
 						console.log(mess[i].created_at);
-						if (i = mess.length){
+						if (i == mess.length){
 						console.log(mess[i].id);
 						}
 					}
