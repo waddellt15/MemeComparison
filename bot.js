@@ -33,7 +33,9 @@ function respond() {
 	botReq.on('timeout', function(err) {
 		console.log('timeout posting message '  + JSON.stringify(err));
 	});
-	console.log(botReq);
+	botReq.on('end', function(){
+		console.log(botReq.data);
+	}
   }
   if(request.text && botRegex.test(request.text)) {
     this.res.writeHead(200);
