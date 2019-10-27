@@ -27,12 +27,12 @@ function respond() {
 			data += chunk;
 		});
 		res.on('end', function(){
-		var mess = JSON.parse(data);
-		for(i = 0; i < mess.messages.length; i++){
-			if(get.messages.attachments.length){
-				for( j = 0; j < mess.messages.attachements; j++){
-					if (mess.messages.attachments[j].type == "image"){
-						console.log(mess.messages.attachments[j].url);
+		var mess = JSON.parse(data).response.messages;
+		for(i = 0; i < mess.length; i++){
+			if(mess.attachments.length){
+				for( j = 0; j < mess.attachements.length; j++){
+					if (mess.attachments[j].type == "image"){
+						console.log(mess.attachments[j].url);
 					}
 				}
 			}
