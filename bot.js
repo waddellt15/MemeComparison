@@ -28,7 +28,15 @@ function respond() {
 		});
 		res.on('end', function(){
 		var mess = JSON.parse(data);
-		console.log(mess.response.messages);
+		for(i = 0; i < mess.messages.length; i++){
+			if(get.messages.attachments.length){
+				for( j = 0; j < mess.messages.attachements){
+					if (mess.messages.attachments[j].type == "image"){
+						console.log(mess.messages.attachments[j].url);
+					}
+				}
+			}
+		}
 		});
 		
 	});
