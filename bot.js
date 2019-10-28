@@ -1,10 +1,13 @@
 var HTTPS = require('https');
 var cool = require('cool-ascii-faces');
-
+var AWS = require('aws-sdk');
+var fs = require('fs');
 var botID = "0b09c5795270482bb28ecfb5ef";
 
 function respond() {
-	console.log(process.env.S3_BUCKET_NAME);
+  AWS.config.update({accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+  var s3 = new AWS.S3();
+  console.log(process.env.S3_BUCKET_NAME);
   var request = JSON.parse(this.req.chunks[0]),
       botRegex = /^\/cool guy$/;
   console.log(request.attachments);
