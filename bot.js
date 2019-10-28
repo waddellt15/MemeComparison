@@ -120,9 +120,9 @@ function findAllMessages(messageID) {
                         }
                     }
                     if (i == 0) {
-                        console.log(messageID);
-                        console.log(mess[i].id);
-                        //findAllMessages(mess[i].id);
+                        //console.log(messageID);
+                        //console.log(mess[i].id);
+                        findAllMessages(mess[i].id);
                     }
                 }
             }
