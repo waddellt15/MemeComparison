@@ -51,7 +51,7 @@ function getGroups() {
         // on end iterate through file
         res.on('end', function () {
             var mess = JSON.parse(data);
-            console.log(mess);
+            console.log(mess.response);
         });
 
     });
