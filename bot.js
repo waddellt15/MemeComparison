@@ -123,8 +123,8 @@ function findAllMessages(messageID) {
                 }
             }
             console.log(mess[mess.length - 1]);
-            console.log(this.messageID);
-            findAllMessages(mess[mess.length - 1].id);
+            console.log(this.messageID.id);
+            //findAllMessages(mess[mess.length - 1].id);
         });
 
     });
