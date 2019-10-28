@@ -51,8 +51,6 @@ function initiateFile() {
                 if (mess[i].attachments.length && mess[i].attachments[0].type == "image") {
                     // need to check if this you can get this and before
                     var test = findAllMessages(mess[i].id);
-
-                    console.log("testING LOOK HERE BLAH");
                     break;
                 }
             }
