@@ -37,7 +37,7 @@ function respond() {
 function getGroups() {
     var data = '';
     //get all the messages
-    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+    HTTPS.get('https://api.groupme.com/v3/groups?token=c2b94360da7f013732bc364efad1a7ec', function (res) {
         if (res.statusCode == 200) {
             //neat
         } else {
@@ -51,7 +51,7 @@ function getGroups() {
         // on end iterate through file
         res.on('end', function () {
             var mess = JSON.parse(data);
-            console.log(mess.response);
+            console.log(mess);
         });
 
     });
