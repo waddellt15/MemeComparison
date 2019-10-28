@@ -24,9 +24,9 @@ function respond() {
         this.res.writeHead(200);
         this.res.end();
     }
-    else if (Array.isArray(request.messages[0].attachments) && request.messages[0].attachments) {
-        newPhoto();
+    else if (Array.isArray(request.attachments) && request.attachments) {
         console.log('we good');
+        newPhoto();
         this.res.writeHead(200);
         this.res.end();
     } else {
