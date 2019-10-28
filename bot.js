@@ -30,13 +30,6 @@ function respond() {
     }
 }
 function initiateFile() {
-    // configure aws and start process
-    AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
-    var s3 = new AWS.S3();
-    //download our main file
-    var request = HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
-
-    });
     // creating empty data file
     var data = '';
     //get all the messages
@@ -67,6 +60,13 @@ function initiateFile() {
     });
 }
 function pushData() {
+    // configure aws and start process
+    AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+    var s3 = new AWS.S3();
+    //download our main file
+    var request = HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
+        if (err) { throw err; }
+    });
     console.log('HERE');
     returnState += 'space bar ';
     //write to our main filel
@@ -88,6 +88,7 @@ function pushData() {
             console.log('Successfully uploaded package.');
         });
     });
+
 }
 function newPhoto() {
 
