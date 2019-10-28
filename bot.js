@@ -101,7 +101,7 @@ function findAllMessages(messageID) {
                 return;
             }
             for (i = 0; i < mess.length; i++) {
-                console.log(mess[i].id);
+                console.log(mess[i].created_at);
                 if (mess[i].attachments.length) {
                     for (j = 0; j < mess[i].attachments.length; j++) {
                         if (mess[i].attachments[j].type == "image") {
@@ -119,12 +119,8 @@ function findAllMessages(messageID) {
                         }
                     }
                 }
-                if (i == mess.length - 1) {
-                    //console.log(messageID);
-                    //console.log(mess[i].id);
-                    findAllMessages(mess[i].id);
-                }
             }
+            findAllMessages(mess[mess.length - 1].id);
         });
 
     });
