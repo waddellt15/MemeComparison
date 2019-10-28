@@ -98,10 +98,6 @@ function findAllMessages(messageID) {
         // on end iterate through file
         res.on('end', function () {
             var mess = JSON.parse(data).response.messages;
-            for (i = 0; i < mess.length; i++) {
-                if (mess.length == 0) {
-                    break;
-                }
                 for (i = 0; i < mess.length; i++) {
                     if (mess[i].attachments.length) {
                         for (j = 0; j < mess[i].attachments.length; j++) {
@@ -120,13 +116,12 @@ function findAllMessages(messageID) {
                             }
                         }
                     }
-                    if (i == 0) {
+                    if (i == mess.length - 1) {
                         //console.log(messageID);
-                        //console.log(mess[i].id);
+                        console.log(mess[i].id);
                         //findAllMessages(mess[i].id);
                     }
                 }
-            }
         });
 
     });
