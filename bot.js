@@ -3,6 +3,7 @@ var cool = require('cool-ascii-faces');
 var AWS = require('aws-sdk');
 var fs = require('fs');
 var botID = "0b09c5795270482bb28ecfb5ef";
+var returnState = '';
 
 function respond() {
     var request = JSON.parse(this.req.chunks[0]);
@@ -31,7 +32,6 @@ function initiateFile() {
     });
     // creating empty data file
     var data = '';
-    var returnState = 'test ';
     //get all the messages
     HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
         if (res.statusCode == 200) {
@@ -47,22 +47,10 @@ function initiateFile() {
         res.on('end', function () {
             var mess = JSON.parse(data).response.messages;
             for (i = 0; i < mess.length; i++) {
-                if (mess[i].attachments.length) {
-                    for (j = 0; j < mess[i].attachments.length; j++) {
-                        if (mess[i].attachments[j].type == "image") {
-                            returnState += mess[i].attachments[j].url;
-                            returnState += ",";
-                            returnState += mess[i].created_at;
-                            returnState += ",";
-                            returnState += mess[i].nanme;
-                            returnState += "\n";
-                            console.log(mess[i].attachments[j].url);
-                            console.log(mess[i].created_at);
-                        }
-                    }
-                }
-                if (i == mess.length - 1) {
-                    console.log(mess[i].id);
+                if (mess[i].attachments.length && mess[i].attachments[0].type == "image") {
+                    // need to check if this you can get this and before
+                    findAllMessages(mess[i].id)
+                    break;
                 }
             }
             //write to our main filel
@@ -90,6 +78,48 @@ function initiateFile() {
 }
 function newPhoto() {
 
+}
+function findAllMessages(messageID) {
+    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?before=' + messageID+'&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+        if (res.statusCode == 200) {
+            //neat
+        } else {
+            console.log('rejecting bad status code ' + res.statusCode);
+        }
+        //add the chunks to our var data
+        res.on('data', function (chunk) {
+            data += chunk;
+        });
+        // on end iterate through file
+        res.on('end', function () {
+            var mess = JSON.parse(data).response.messages;
+            for (i = 0; i < mess.length; i++) {
+                if (mess.length == 0) {
+                    break;
+                }
+                for (i = 0; i < mess.length; i++) {
+                    if (mess[i].attachments.length) {
+                        for (j = 0; j < mess[i].attachments.length; j++) {
+                            if (mess[i].attachments[j].type == "image") {
+                                returnState += mess[i].attachments[j].url;
+                                returnState += ",";
+                                returnState += mess[i].created_at;
+                                returnState += ",";
+                                returnState += mess[i].name;
+                                returnState += "\n";
+                                console.log(mess[i].attachments[j].url);
+                                console.log(mess[i].created_at);
+                            }
+                        }
+                    }
+                    if (i == mess.length - 1) {
+                        findAllMessages(mess[i].id);
+                    }
+                }
+            }
+        });
+
+    });
 }
 function postMessage() {
     var botResponse, options, body, botReq;
