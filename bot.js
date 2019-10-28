@@ -55,24 +55,6 @@ function initiateFile() {
                 }
             }
             //write to our main filel
-            fs.appendFile('newfile.txt', returnState, function (err) {
-                if (err) throw err;
-                console.log('file is edited.');
-            });
-            // read out main file, convert it into bas64Data and then upload as text file
-            fs.readFile('newfile.txt', function (err, data) {
-                if (err) { throw err; }
-                var base64data = new Buffer(data, 'binary');
-                s3.putObject({
-                    Bucket: process.env.S3_BUCKET_NAME,
-                    Key: 'newfile.txt',
-                    Body: base64data,
-                    ACL: 'public-read'
-                }, function (resp) {
-                    console.log(arguments);
-                    console.log('Successfully uploaded package.');
-                });
-            });
         });
 
     });
