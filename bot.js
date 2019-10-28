@@ -13,7 +13,13 @@ function respond() {
         initiateFile();
         this.res.writeHead(200);
         this.res.end();
-    } else if (Array.isArray(request.attachments) && request.attachments.length) {
+    }
+    else if (request.text == "/pushdata") {
+        pushData();
+        this.res.writeHead(200);
+        this.res.end();
+    }
+    else if (Array.isArray(request.attachments) && request.attachments.length) {
         newPhoto();
         this.res.writeHead(200);
         this.res.end();
@@ -44,8 +50,10 @@ function initiateFile() {
         res.on('data', function (chunk) {
             data += chunk;
         });
+
         // on end iterate through file
         res.on('end', function () {
+            returnState = '';
             var mess = JSON.parse(data).response.messages;
             for (i = 0; i < mess.length; i++) {
                 if (mess[i].attachments.length && mess[i].attachments[0].type == "image") {
@@ -54,29 +62,31 @@ function initiateFile() {
                     break;
                 }
             }
-            console.log('HERE');
-            returnState += 'space bar ';
-            //write to our main filel
-            fs.appendFile('newfile.txt', returnState, function (err) {
-                if (err) throw err;
-                console.log('file is edited.');
-            });
-            // read out main file, convert it into bas64Data and then upload as text file
-            fs.readFile('newfile.txt', function (err, data) {
-                if (err) { throw err; }
-                var base64data = new Buffer(data, 'binary');
-                s3.putObject({
-                    Bucket: process.env.S3_BUCKET_NAME,
-                    Key: 'newfile.txt',
-                    Body: base64data,
-                    ACL: 'public-read'
-                }, function (resp) {
-                    console.log(arguments);
-                    console.log('Successfully uploaded package.');
-                });
-            });
         });
 
+    });
+}
+function pushData() {
+    console.log('HERE');
+    returnState += 'space bar ';
+    //write to our main filel
+    fs.appendFile('newfile.txt', returnState, function (err) {
+        if (err) throw err;
+        console.log('file is edited.');
+    });
+    // read out main file, convert it into bas64Data and then upload as text file
+    fs.readFile('newfile.txt', function (err, data) {
+        if (err) { throw err; }
+        var base64data = new Buffer(data, 'binary');
+        s3.putObject({
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key: 'newfile.txt',
+            Body: base64data,
+            ACL: 'public-read'
+        }, function (resp) {
+            console.log(arguments);
+            console.log('Successfully uploaded package.');
+        });
     });
 }
 function newPhoto() {
