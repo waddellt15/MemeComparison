@@ -146,89 +146,90 @@ function newPhoto() {
 
         });
         pushData();
-    }
+    });
+}
 function findAllMessages(messageID) {
-            HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?before_id=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
-                if (res.statusCode == 200) {
-                    //neat
-                } else {
-                    console.log('rejecting bad status code ' + res.statusCode);
-                    return;
-                }
-                data = '';
-                //add the chunks to our var data
-                res.on('data', function (chunk) {
-                    data += chunk;
-                });
-                // on end iterate through file
-                res.on('end', function () {
-                    var mess = JSON.parse(data).response.messages;
-                    if (mess.size == 1) {
-                        return;
-                    }
+    HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?before_id=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+        if (res.statusCode == 200) {
+            //neat
+        } else {
+            console.log('rejecting bad status code ' + res.statusCode);
+            return;
+        }
+        data = '';
+        //add the chunks to our var data
+        res.on('data', function (chunk) {
+            data += chunk;
+        });
+        // on end iterate through file
+        res.on('end', function () {
+            var mess = JSON.parse(data).response.messages;
+            if (mess.size == 1) {
+                return;
+            }
 
-                    for (i = 0; i < mess.length; i++) {
-                        console.log(mess[i].created_at);
-                        console.log(mess[i].id);
-                        if (mess[i].attachments.length) {
-                            for (j = 0; j < mess[i].attachments.length; j++) {
-                                if (mess[i].attachments[j].type == "image") {
-                                    returnState += mess[i].attachments[j].url;
-                                    returnState += ",";
-                                    returnState += mess[i].created_at;
-                                    returnState += ",";
-                                    returnState += mess[i].name;
-                                    returnState += "\n";
-                                    //console.log(mess[i].attachments[j].url);
-                                    //console.log(mess[i].created_at);
-                                    returnCount += 1;
-                                    console.log(returnCount);
-                                    //console.log(mess[i].id);
-                                }
-                            }
+            for (i = 0; i < mess.length; i++) {
+                console.log(mess[i].created_at);
+                console.log(mess[i].id);
+                if (mess[i].attachments.length) {
+                    for (j = 0; j < mess[i].attachments.length; j++) {
+                        if (mess[i].attachments[j].type == "image") {
+                            returnState += mess[i].attachments[j].url;
+                            returnState += ",";
+                            returnState += mess[i].created_at;
+                            returnState += ",";
+                            returnState += mess[i].name;
+                            returnState += "\n";
+                            //console.log(mess[i].attachments[j].url);
+                            //console.log(mess[i].created_at);
+                            returnCount += 1;
+                            console.log(returnCount);
+                            //console.log(mess[i].id);
                         }
                     }
-                    console.log(mess[mess.length - 1].id);
-                    console.log(messageID);
-                    findAllMessages(mess[mess.length - 1].id);
-                });
-
-            });
-        }
-function postMessage() {
-            var botResponse, options, body, botReq;
-
-            botResponse = cool();
-
-            options = {
-                hostname: 'api.groupme.com',
-                path: '/v3/bots/post',
-                method: 'POST'
-            };
-
-            body = {
-                "bot_id": botID,
-                "text": botResponse
-            };
-
-            console.log('sending ' + botResponse + ' to ' + botID);
-
-            botReq = HTTPS.request(options, function (res) {
-                if (res.statusCode == 202) {
-                    //neat
-                } else {
-                    console.log('rejecting bad status code ' + res.statusCode);
                 }
-            });
+            }
+            console.log(mess[mess.length - 1].id);
+            console.log(messageID);
+            findAllMessages(mess[mess.length - 1].id);
+        });
 
-            botReq.on('error', function (err) {
-                console.log('error posting message ' + JSON.stringify(err));
-            });
-            botReq.on('timeout', function (err) {
-                console.log('timeout posting message ' + JSON.stringify(err));
-            });
-            botReq.end(JSON.stringify(body));
+    });
+}
+function postMessage() {
+    var botResponse, options, body, botReq;
+
+    botResponse = cool();
+
+    options = {
+        hostname: 'api.groupme.com',
+        path: '/v3/bots/post',
+        method: 'POST'
+    };
+
+    body = {
+        "bot_id": botID,
+        "text": botResponse
+    };
+
+    console.log('sending ' + botResponse + ' to ' + botID);
+
+    botReq = HTTPS.request(options, function (res) {
+        if (res.statusCode == 202) {
+            //neat
+        } else {
+            console.log('rejecting bad status code ' + res.statusCode);
         }
+    });
+
+    botReq.on('error', function (err) {
+        console.log('error posting message ' + JSON.stringify(err));
+    });
+    botReq.on('timeout', function (err) {
+        console.log('timeout posting message ' + JSON.stringify(err));
+    });
+    botReq.end(JSON.stringify(body));
+}
 
 
 exports.respond = respond;
