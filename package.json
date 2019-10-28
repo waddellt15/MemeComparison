@@ -9,6 +9,7 @@
   "dependencies": {
     "director": "",
     "cool-ascii-faces": "~1.3.x"
+	"aws-sdk": "2.x"
   },
   "engines": {
     "node": "0.10.x"
