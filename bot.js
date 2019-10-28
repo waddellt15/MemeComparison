@@ -97,30 +97,33 @@ function findAllMessages(messageID) {
         // on end iterate through file
         res.on('end', function () {
             var mess = JSON.parse(data).response.messages;
-                for (i = 0; i < mess.length; i++) {
-                    if (mess[i].attachments.length) {
-                        for (j = 0; j < mess[i].attachments.length; j++) {
-                            if (mess[i].attachments[j].type == "image") {
-                                returnState += mess[i].attachments[j].url;
-                                returnState += ",";
-                                returnState += mess[i].created_at;
-                                returnState += ",";
-                                returnState += mess[i].name;
-                                returnState += "\n";
-                                //console.log(mess[i].attachments[j].url);
-                                console.log(mess[i].created_at);
-                                returnCount += 1;
-                                console.log(returnCount);
-                                //console.log(mess[i].id);
-                            }
+            if (mess.size == 1) {
+                return;
+            }
+            for (i = 0; i < mess.length; i++) {
+                if (mess[i].attachments.length) {
+                    for (j = 0; j < mess[i].attachments.length; j++) {
+                        if (mess[i].attachments[j].type == "image") {
+                            returnState += mess[i].attachments[j].url;
+                            returnState += ",";
+                            returnState += mess[i].created_at;
+                            returnState += ",";
+                            returnState += mess[i].name;
+                            returnState += "\n";
+                            //console.log(mess[i].attachments[j].url);
+                            console.log(mess[i].created_at);
+                            returnCount += 1;
+                            console.log(returnCount);
+                            //console.log(mess[i].id);
                         }
                     }
-                    if (i == mess.length - 1) {
-                        //console.log(messageID);
-                        //console.log(mess[i].id);
-                        findAllMessages(mess[i].id);
-                    }
                 }
+                if (i == mess.length - 1) {
+                    //console.log(messageID);
+                    //console.log(mess[i].id);
+                    findAllMessages(mess[i].id);
+                }
+            }
         });
 
     });
