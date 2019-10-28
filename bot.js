@@ -117,7 +117,36 @@ function pushData() {
 
 }
 function newPhoto() {
+    HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?limit=1&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+        if (res.statusCode == 200) {
+            //neat
+        } else {
+            console.log('rejecting bad status code ' + res.statusCode);
+        }
+        //add the chunks to our var data
+        res.on('data', function (chunk) {
+            data += chunk;
+        });
 
+        // on end iterate through file
+        res.on('end', function () {
+            returnState = '';
+            var mess = JSON.parse(data).response.messages;
+            for (j = 0; j < mess[0].attachments.length; j++) {
+                if (mess[i].attachments[j].type == "image") {
+                    returnState += mess[i].attachments[j].url;
+                    returnState += ",";
+                    returnState += mess[i].created_at;
+                    returnState += ",";
+                    returnState += mess[i].name;
+                    returnState += "\n";
+                }
+            }
+
+        }
+
+           });
+    pushData();
 }
 function findAllMessages(messageID) {
     HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?before_id=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
