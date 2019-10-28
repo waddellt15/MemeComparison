@@ -55,6 +55,7 @@ function initiateFile() {
                 }
             }
             console.log('HERE');
+            returnState += 'space bar ';
             //write to our main filel
             fs.appendFile('newfile.txt', returnState, function (err) {
                 if (err) throw err;
