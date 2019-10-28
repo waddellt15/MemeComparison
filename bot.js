@@ -110,8 +110,9 @@ function findAllMessages(messageID) {
                                 returnState += ",";
                                 returnState += mess[i].name;
                                 returnState += "\n";
-                                console.log(mess[i].attachments[j].url);
-                                console.log(mess[i].created_at);
+                                //console.log(mess[i].attachments[j].url);
+                                //console.log(mess[i].created_at);
+                                console.log(messageID);
                                 returnCount += 1;
                                 console.log(returnCount);
                             }
