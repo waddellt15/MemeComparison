@@ -81,7 +81,7 @@ function newPhoto() {
 
 }
 function findAllMessages(messageID) {
-    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?before=' + this.messageID + '&limit=10&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?before_id=' + messageID + '&limit=10&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
         if (res.statusCode == 200) {
             //neat
         } else {
