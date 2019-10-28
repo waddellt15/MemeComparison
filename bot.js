@@ -101,6 +101,7 @@ function findAllMessages(messageID) {
                 return;
             }
             for (i = 0; i < mess.length; i++) {
+                console.log(mess[i].id);
                 if (mess[i].attachments.length) {
                     for (j = 0; j < mess[i].attachments.length; j++) {
                         if (mess[i].attachments[j].type == "image") {
@@ -111,7 +112,7 @@ function findAllMessages(messageID) {
                             returnState += mess[i].name;
                             returnState += "\n";
                             //console.log(mess[i].attachments[j].url);
-                            console.log(mess[i].created_at);
+                            //console.log(mess[i].created_at);
                             returnCount += 1;
                             console.log(returnCount);
                             //console.log(mess[i].id);
