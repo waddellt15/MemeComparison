@@ -19,6 +19,11 @@ function respond() {
         this.res.writeHead(200);
         this.res.end();
     }
+    else if (request.text == "/getgroups") {
+        pushData();
+        this.res.writeHead(200);
+        this.res.end();
+    }
     else if (Array.isArray(request.attachments) && request.attachments.length) {
         newPhoto();
         this.res.writeHead(200);
@@ -28,6 +33,28 @@ function respond() {
         this.res.writeHead(200);
         this.res.end();
     }
+}
+function getGroups() {
+    var data = '';
+    //get all the messages
+    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+        if (res.statusCode == 200) {
+            //neat
+        } else {
+            console.log('rejecting bad status code ' + res.statusCode);
+        }
+        //add the chunks to our var data
+        res.on('data', function (chunk) {
+            data += chunk;
+        });
+
+        // on end iterate through file
+        res.on('end', function () {
+            var mess = JSON.parse(data);
+            consol.log(mess);
+        });
+
+    });
 }
 function initiateFile() {
     // creating empty data file
