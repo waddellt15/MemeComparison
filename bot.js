@@ -24,8 +24,9 @@ function respond() {
         this.res.writeHead(200);
         this.res.end();
     }
-    else if (Array.isArray(request.attachments) && request.attachments.length) {
+    else if (Array.isArray(request.messages[0].attachments) && request.messages[0].attachments) {
         newPhoto();
+        console.log('we good');
         this.res.writeHead(200);
         this.res.end();
     } else {
@@ -94,7 +95,6 @@ function pushData() {
     var request = HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
         //if (err) throw err;
     });
-    console.log('HERE');
     //write to our main filel
     fs.appendFile('newfile.txt', returnState, function (err) {
         if (err) throw err;
