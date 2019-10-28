@@ -54,11 +54,12 @@ function initiateFile() {
                     break;
                 }
             }
+            console.log('HERE');
             //write to our main filel
             fs.appendFile('newfile.txt', returnState, function (err) {
                 if (err) throw err;
                 console.log('file is edited.');
-            },2);
+            });
             // read out main file, convert it into bas64Data and then upload as text file
             fs.readFile('newfile.txt', function (err, data) {
                 if (err) { throw err; }
@@ -72,7 +73,7 @@ function initiateFile() {
                     console.log(arguments);
                     console.log('Successfully uploaded package.');
                 });
-            },2);
+            });
         });
 
     });
@@ -86,7 +87,6 @@ function findAllMessages(messageID) {
             //neat
         } else {
             console.log('rejecting bad status code ' + res.statusCode);
-            console.log('test');
             return;
         }
         data = '';
