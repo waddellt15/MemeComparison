@@ -13,7 +13,7 @@ function respond() {
   console.log('File is created successfully.');
   }); 
   s3.client.putObject({
-	  Bucket: S3_BUCKET_NAME,
+	  Bucket: process.env.S3_BUCKET_NAME,
 	  Key: 'newfile.txt',
 	  Body: base64data,
 	  ACL: 'public-read'
