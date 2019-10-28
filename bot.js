@@ -15,7 +15,7 @@ function respond() {
     fs.readFile('newfile.txt', function (err, data) {
         if (err) { throw err; }
         var base64data = new Buffer(data, 'binary');
-        s3.client.putObject({
+        s3.putObject({
             Bucket: process.env.S3_BUCKET_NAME,
             Key: 'newfile.txt',
             Body: base64data,
