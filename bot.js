@@ -10,7 +10,7 @@ function respond() {
     var s3 = new AWS.S3();
     //download our main file
     var request = HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
-        if (err) throw err;
+        
     });
     //write to our main filel
     fs.appendFile('newfile.txt', 'more to the file', function (err) {
