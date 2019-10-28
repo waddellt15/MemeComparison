@@ -5,13 +5,19 @@ var fs = require('fs');
 var botID = "0b09c5795270482bb28ecfb5ef";
 
 function respond() {
+    // configure aws and start process
     AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var s3 = new AWS.S3();
-    console.log(process.env.S3_BUCKET_NAME);
-    fs.writeFile('newfile.txt', 'Learn Node FS module', function (err) {
-        if (err) throw err;
-        console.log('File is created successfully.');
+    //download our main file
+    var request = http.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (response) {
+        response.pipe(file);
     });
+    //write to our main filel
+    fs.appendFile('newfile.txt', 'more to the file', function (err) {
+        if (err) throw err;
+        console.log('File is saved');
+    });
+    // read out main file, convert it into bas64Data and then upload as text file
     fs.readFile('newfile.txt', function (err, data) {
         if (err) { throw err; }
         var base64data = new Buffer(data, 'binary');
@@ -25,9 +31,9 @@ function respond() {
             console.log('Successfully uploaded package.');
         });
     });
-    var request = JSON.parse(this.req.chunks[0]),
-        botRegex = /^\/cool guy$/;
-    console.log(request.attachments);
+    //get the request data, convert it into json
+    var request = JSON.parse(this.req.chunks[0]);
+    //check if it has an attachment
     if (Array.isArray(request.attachments) && request.attachments.length) {
         var att = request.attachments[0].url;
         console.log(att);
@@ -68,9 +74,8 @@ function respond() {
         });
 
     }
-    if (request.text && botRegex.test(request.text)) {
+    if (request.text) {
         this.res.writeHead(200);
-        postMessage();
         this.res.end();
     } else {
         console.log("don't care");
