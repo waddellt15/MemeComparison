@@ -9,8 +9,8 @@ function respond() {
     AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var s3 = new AWS.S3();
     //download our main file
-    var request = HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (response) {
-        response.pipe(file);
+    var request = HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
+        if (err) throw err;
     });
     //write to our main filel
     fs.appendFile('newfile.txt', 'more to the file', function (err) {
@@ -37,22 +37,26 @@ function respond() {
     if (Array.isArray(request.attachments) && request.attachments.length) {
         var att = request.attachments[0].url;
         console.log(att);
+        //group me api settings
         options = {
             hostname: 'api.groupme.com',
             path: '/v3/groups',
             method: 'GET'
         };
+        // creating empty data file
         var data = '';
+        //get all the messages
         HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
-            console.log("thisworks");
             if (res.statusCode == 200) {
                 //neat
             } else {
                 console.log('rejecting bad status code ' + res.statusCode);
             }
+            //add the chunks to our var data
             res.on('data', function (chunk) {
                 data += chunk;
             });
+            // on end iterate through file
             res.on('end', function () {
                 var mess = JSON.parse(data).response.messages;
                 for (i = 0; i < mess.length; i++) {
@@ -66,7 +70,6 @@ function respond() {
                     }
                     if (i == mess.length - 1) {
                         console.log(mess[i].id);
-                        console.log("eat it");
                     }
                 }
             });
