@@ -71,7 +71,6 @@ function pushData() {
     returnState += 'space bar ';
     //write to our main filel
     fs.appendFile('newfile.txt', returnState, function (err) {
-        if (err) throw err;
         console.log('file is edited.');
     });
     // read out main file, convert it into bas64Data and then upload as text file
