@@ -60,7 +60,7 @@ function initiateFile() {
     // creating empty data file
     var data = '';
     //get all the messages
-    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+    HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
         if (res.statusCode == 200) {
             //neat
         } else {
@@ -120,7 +120,7 @@ function newPhoto() {
 
 }
 function findAllMessages(messageID) {
-    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?before_id=' + messageID + '&limit=10&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+    HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?before_id=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
         if (res.statusCode == 200) {
             //neat
         } else {
