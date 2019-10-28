@@ -133,13 +133,13 @@ function newPhoto() {
         res.on('end', function () {
             returnState = '';
             var mess = JSON.parse(data).response.messages;
-            for (j = 0; j < mess[0].attachments.length; j++) {
-                if (mess[i].attachments[j].type == "image") {
-                    returnState += mess[i].attachments[j].url;
+            for (j = 0; j < mess[0].attachments[j].length; j++) {
+                if (mess[0].attachments[j].type == "image") {
+                    returnState += mess[0].attachments[j].url;
                     returnState += ",";
-                    returnState += mess[i].created_at;
+                    returnState += mess[0].created_at;
                     returnState += ",";
-                    returnState += mess[i].name;
+                    returnState += mess[0].name;
                     returnState += "\n";
                 }
             }
