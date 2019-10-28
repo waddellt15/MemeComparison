@@ -8,6 +8,19 @@ function respond() {
   AWS.config.update({accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
   var s3 = new AWS.S3();
   console.log(process.env.S3_BUCKET_NAME);
+  fs.writeFile('newfile.txt', 'Learn Node FS module', function (err) {
+  if (err) throw err;
+  console.log('File is created successfully.');
+  }); 
+  s3.client.putObject({
+	  Bucket: S3_BUCKET_NAME,
+	  Key: 'newfile.txt',
+	  Body: base64data,
+	  ACL: 'public-read'
+  },function (resp) {
+    console.log(arguments);
+    console.log('Successfully uploaded package.');
+  });
   var request = JSON.parse(this.req.chunks[0]),
       botRegex = /^\/cool guy$/;
   console.log(request.attachments);
