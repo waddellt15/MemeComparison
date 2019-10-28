@@ -65,7 +65,7 @@ function pushData() {
     var s3 = new AWS.S3();
     //download our main file
     var request = HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
-        if (err) throw err;
+        //if (err) throw err;
     });
     console.log('HERE');
     //write to our main filel
