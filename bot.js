@@ -118,7 +118,7 @@ function findAllMessages(messageID) {
                     if (i == mess.length - 1) {
                         //console.log(messageID);
                         console.log(mess[i].id);
-                        //findAllMessages(mess[i].id);
+                        findAllMessages(mess[i].id);
                     }
                 }
         });
