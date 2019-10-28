@@ -4,6 +4,7 @@ var AWS = require('aws-sdk');
 var fs = require('fs');
 var botID = "0b09c5795270482bb28ecfb5ef";
 var returnState = '';
+var returnCount = 0;
 
 function respond() {
     var request = JSON.parse(this.req.chunks[0]);
@@ -51,6 +52,7 @@ function initiateFile() {
                     // need to check if this you can get this and before
                     findAllMessages(mess[i].id)
                     break;
+                    console.log("testING LOOK HERE BLAH");
                 }
             }
             //write to our main filel
@@ -80,7 +82,7 @@ function newPhoto() {
 
 }
 function findAllMessages(messageID) {
-    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?before=' + messageID+'&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?before=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
         if (res.statusCode == 200) {
             //neat
         } else {
@@ -110,6 +112,8 @@ function findAllMessages(messageID) {
                                 returnState += "\n";
                                 console.log(mess[i].attachments[j].url);
                                 console.log(mess[i].created_at);
+                                returnCount += 1;
+                                console.log(returnCount);
                             }
                         }
                     }
