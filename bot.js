@@ -20,7 +20,7 @@ function respond() {
         this.res.end();
     }
     else if (request.text == "/getgroups") {
-        pushData();
+        getGroups();
         this.res.writeHead(200);
         this.res.end();
     }
