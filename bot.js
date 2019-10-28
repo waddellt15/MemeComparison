@@ -86,6 +86,7 @@ function findAllMessages(messageID) {
         } else {
             console.log('rejecting bad status code ' + res.statusCode);
         }
+        data = '';
         //add the chunks to our var data
         res.on('data', function (chunk) {
             data += chunk;
