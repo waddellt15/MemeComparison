@@ -65,15 +65,17 @@ function pushData() {
     var s3 = new AWS.S3();
     //download our main file
     var request = HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
+        if (err) throw err;
     });
     console.log('HERE');
-    returnState += 'space bar ';
     //write to our main filel
     fs.appendFile('newfile.txt', returnState, function (err) {
+        if (err) throw err;
         console.log('file is edited.');
     });
     // read out main file, convert it into bas64Data and then upload as text file
     fs.readFile('newfile.txt', function (err, data) {
+        if (err) throw err;
         var base64data = new Buffer(data, 'binary');
         s3.putObject({
             Bucket: process.env.S3_BUCKET_NAME,
