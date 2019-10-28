@@ -121,7 +121,7 @@ function findAllMessages(messageID) {
                     }
                 }
             }
-            findAllMessages(mess[mess.length - 1].id);
+            //findAllMessages(mess[mess.length - 1].id);
         });
 
     });
