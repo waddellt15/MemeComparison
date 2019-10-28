@@ -87,6 +87,7 @@ function findAllMessages(messageID) {
             //neat
         } else {
             console.log('rejecting bad status code ' + res.statusCode);
+            return;
         }
         data = '';
         //add the chunks to our var data
@@ -118,7 +119,7 @@ function findAllMessages(messageID) {
                             }
                         }
                     }
-                    if (i == mess.length - 1) {
+                    if (i == 0) {
                         console.log(messageID);
                         console.log(mess[i].id);
                         //findAllMessages(mess[i].id);
