@@ -51,8 +51,8 @@ function initiateFile() {
                 if (mess[i].attachments.length && mess[i].attachments[0].type == "image") {
                     // need to check if this you can get this and before
                     findAllMessages(mess[i].id)
-                    break;
                     console.log("testING LOOK HERE BLAH");
+                    break;
                 }
             }
             //write to our main filel
@@ -122,7 +122,7 @@ function findAllMessages(messageID) {
                     if (i == 0) {
                         //console.log(messageID);
                         //console.log(mess[i].id);
-                        findAllMessages(mess[i].id);
+                        //findAllMessages(mess[i].id);
                     }
                 }
             }
