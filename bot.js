@@ -117,6 +117,7 @@ function pushData() {
 
 }
 function newPhoto() {
+    var data = '';
     HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?limit=1&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
         if (res.statusCode == 200) {
             //neat
