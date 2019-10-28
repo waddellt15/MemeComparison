@@ -112,14 +112,15 @@ function findAllMessages(messageID) {
                                 returnState += "\n";
                                 //console.log(mess[i].attachments[j].url);
                                 //console.log(mess[i].created_at);
-                                console.log(messageID);
                                 returnCount += 1;
                                 console.log(returnCount);
+                                console.log(mess[i].id);
                             }
                         }
                     }
                     if (i == mess.length - 1) {
-                        findAllMessages(mess[i].id);
+                        console.log(mess[i].id);
+                        //findAllMessages(mess[i].id);
                     }
                 }
             }
