@@ -35,7 +35,7 @@ async function respond() {
             if (request.attachments[j].type == "image") {
                 var hashT = '';
                 hashT = await hashing(request.attachments[0].url);
-                await checkMeme(request, hashT.toString);
+                await checkMeme(request, hashT);
             }
         }
 
@@ -57,7 +57,7 @@ function checkMeme(request, hashT) {
             "#hash": "hash"
         },
         ExpressionAttributeValues: {
-            'hash': { 'N': hashT } 
+            'hash': { 'N': hashT.toString } 
         }
     }
     dynamo.scan(params, function (err, data) {
