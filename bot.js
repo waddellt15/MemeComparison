@@ -1,5 +1,4 @@
 var HTTPS = require('https');
-var cool = require('cool-ascii-faces');
 var AWS = require('aws-sdk');
 var fs = require('fs');
 var botID = "0b09c5795270482bb28ecfb5ef";
@@ -193,7 +192,6 @@ function sleep(ms) {
 function postMessage() {
     var botResponse, options, body, botReq;
 
-    botResponse = cool();
 
     options = {
         hostname: 'api.groupme.com',
