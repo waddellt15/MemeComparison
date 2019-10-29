@@ -5,6 +5,7 @@ var botID = "0b09c5795270482bb28ecfb5ef";
 var returnCount = 0;
 var gm = require('gm').subClass({ imageMagick: true });
 var request = require('request');
+var dhash = require('dhash');
 
 function respond() {
     var request = JSON.parse(this.req.chunks[0]);
@@ -221,6 +222,9 @@ function sleep(ms) {
 function hashing() {
     var url = "https://i.groupme.com/1024x576.jpeg.d88c69abfcd24d558fe1822f57b05eb4"
     gm(request(url))
+        .resize(16, 16)
+        .noProfile
+        .colorspace(gray)
         .write('reformat.png', function (err) {
             if (!err) console.log("we did it");
         });

@@ -10,6 +10,7 @@
     "director": "",
     "aws-sdk": "2.x",
     "gm": "1.x",
+    "dhash": "0.x",
     "request": "2.x"
   },
   "engines": {
