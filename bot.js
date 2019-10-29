@@ -116,7 +116,7 @@ function pushData() {
         else console.log(data);           // successful response
     });
     //write to our main file
-    fs.appendFileSync('newfile.txt', returnState, function (err) {
+    fs.appendFileS('newfile.txt', returnState, function (err) {
         if (err) throw err;
         console.log('file is edited.');
     });
