@@ -65,8 +65,9 @@ function checkMeme(request, hashT) {
         if (err) {
             console.log("Error", err);
         } else {
-            console.log(data)
-            if (data.count == 0) {
+            console.log(data);
+            console.log(data.Count);
+            if (data.Count == 0) {
                 addMeme(request, hashT);
             }
             else {
