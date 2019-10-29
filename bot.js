@@ -166,7 +166,7 @@ async function findAllMessages(messageID) {
                             }
                             dynamo.putItem(params, function (err, data) {
                                 if (err) {
-                                    console.log("Error", err);
+                                    console.log("Err/or", err);
                                 } else {
                                     console.log("Success", data);
                                 }
