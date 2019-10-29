@@ -43,8 +43,16 @@ function respond() {
                         'favorites': { N: fav }
                     }
                 }
+                dynamo.putItem(params, function (err, data) {
+                    if (err) {
+                        console.log("Error", err);
+                    } else {
+                        console.log("Success", data);
+                    }
+                });
             }
         }
+
         this.res.writeHead(200);
         this.res.end();
     } else {
