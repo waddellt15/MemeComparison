@@ -27,6 +27,21 @@ function respond() {
     else if (Array.isArray(request.attachments) && request.attachments) {
         console.log('we good');
         returnState = '';
+        AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+        var dynamo = new AWS.DynamoDB();
+        var params = {
+            TableName: 'clarkteems3000',
+            Item: {
+                'Image': { S: 'test' }
+            }
+        }
+        dynamo.putItem(params, function (err, data) {
+            if (err) {
+                console.log("Error", err);
+            } else {
+                console.log("Success", data);
+            }
+        });
         returnState += 'tests ';
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
@@ -101,8 +116,6 @@ function initiateFile() {
 }
 function pushData() {
     // configure aws and start process
-    AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
-    var s3 = new AWS.S3();
     //download our main file
     HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
         //if (err) throw err;
