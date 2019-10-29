@@ -27,7 +27,7 @@ function respond() {
     else if (Array.isArray(request.attachments) && request.attachments) {
         console.log('we good');
         returnState = '';
-        AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+        AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
         var dynamo = new AWS.DynamoDB();
         var params = {
             TableName: 'clarkteems3000',
