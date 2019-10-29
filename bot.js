@@ -57,7 +57,7 @@ function checkMeme(request, hashT) {
             "#hash": "hash"
         },
         ExpressionAttributeValues: {
-            ':hash': { N: hashT.toString } 
+            ':hash': hashT.toString  // { N: hashT.toString } 
         }
     }
     dynamo.scan(params, function (err, data) {
