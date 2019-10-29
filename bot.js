@@ -65,6 +65,7 @@ function checkMeme(request, hashT) {
         if (err) {
             console.log("Error", err);
         } else {
+            console.log(data)
             if (data.count == 0) {
                 addMeme(request, hashT);
             }
@@ -77,7 +78,7 @@ function checkMeme(request, hashT) {
 }
 function reposter(request, original) {
     console.log("REPOST");
-    console.log(original.Items[0].poster);
+    //console.log(original.Items[0].poster);
 }
 function addMeme(request, hashT) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
@@ -268,7 +269,7 @@ function hashing(url) {
                     if (!err) console.log("we did it");
                     dhash('reformat.png', function (err, hash) {
                         if (err) console.log(err);
-                        hashT = parseInt(hash.toString(),16).toString(2);
+                        hashT = hash;
                         fs.unlink('reformat.png', function (err, data) {
                             if (err) {
                                 console.log("Error", err);
