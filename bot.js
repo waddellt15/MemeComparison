@@ -51,13 +51,13 @@ function checkMeme(request, hashT) {
     var dynamo = new AWS.DynamoDB();
     var params = {
         TableName: 'clarkteems3000',
-        ProjectionExpression: "poster, date",
+        //ProjectionExpression: "poster, date",
         FilterExpression: "#hash = :hash",
         ExpressionAttributeNames: {
-            "#hash": "hash",
+            "#hash": "hash"
         },
         ExpressionAttributeValues: {
-            ':hash': hashT 
+            ':hash':hashT 
         }
     }
     dynamo.scan(params, function (err, data) {
