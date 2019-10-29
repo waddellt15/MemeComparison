@@ -173,7 +173,7 @@ function findAllMessages(messageID) {
             }
             console.log(mess[mess.length - 1].id);
             console.log(messageID);
-            findAllMessages(mess[mess.length - 1].id, 200);
+            findAllMessages(mess[mess.length - 1].id, 0.2);
         });
 
     });
