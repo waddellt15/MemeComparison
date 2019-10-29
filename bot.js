@@ -154,7 +154,7 @@ function findAllMessages(messageID) {
                                     'poster': { S: mess[i].name },
                                     'date': { N: mess[i].created_at.toString() },
                                     'hash': { N: '0' },
-                                    'favorites': { N: if(mess[i].favorited_by.length) { mess[i].favorited_by.length.toString() } else { '0' } }
+                                    'favorites': { N: mess[i].favorited_by.length.toString() }
 
                                 }
                             }
