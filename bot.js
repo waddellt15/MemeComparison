@@ -179,15 +179,16 @@ function findAllMessages(messageID) {
             }
             console.log(mess[mess.length - 1].id);
             console.log(messageID);
-            setTimeout(findAllMessages(mess[mess.length - 1].id),30000);
+            findAllMessages(mess[mess.length - 1].id);
         });
 
     });
 }
 function sleep(ms) {
-    setTimeout(function () {
-        return; 
-    }, ms);
+    return new Promise(resolve => {
+        setTimeout(() => {
+            resolve(x);
+        }, ms);
 }
 function postMessage() {
     var botResponse, options, body, botReq;
