@@ -32,7 +32,8 @@ function respond() {
         var params = {
             TableName: 'clarkteems3000',
             Item: {
-                'Image': { S: 'test' }
+                'Image': { S: 'test' },
+                'Eat': {S: 'poo'}
             }
         }
         dynamo.putItem(params, function (err, data) {
