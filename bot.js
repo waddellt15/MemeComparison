@@ -3,7 +3,7 @@ var AWS = require('aws-sdk');
 var fs = require('fs');
 var botID = "0b09c5795270482bb28ecfb5ef";
 var returnCount = 0;
-var gm = require('gm');
+var gm = require('gm').subClass({ imageMagick: true });
 var request = require('request');
 
 function respond() {
