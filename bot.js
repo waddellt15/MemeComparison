@@ -28,7 +28,7 @@ function respond() {
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
                 var fav = '';
-                if (mess[i].favorited_by) {
+                if (request.favorited_by) {
                     fav = request.favorited_by.length.toString()
                 } else {
                     fav = '0'
