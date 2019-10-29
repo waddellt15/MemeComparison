@@ -105,7 +105,7 @@ function pushData() {
     var s3 = new AWS.S3();
     //download our main file
     HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
-        if (err) throw err;
+        //if (err) throw err;
     });
     var params = {
         Bucket: process.env.S3_BUCKET_NAME,
