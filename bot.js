@@ -84,7 +84,7 @@ function reposter(request, original) {
         path: '/v3/bots/post',
         method: 'POST'
     };
-    botResponse = "REPOST, Original post by:" + original.Items[0].poster;
+    botResponse = "REPOST @" + original.name + " , Original post by:" + original.Items[0].poster.S;
 
     body = {
         "bot_id": botID,
@@ -109,7 +109,7 @@ function reposter(request, original) {
     });
     botReq.end(JSON.stringify(body));
     console.log("REPOST");
-    console.log(original.Items[0].poster);
+    console.log(original.Items[0].poster.S);
 }
 function addMeme(request, hashT) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
