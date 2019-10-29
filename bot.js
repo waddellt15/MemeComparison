@@ -90,9 +90,9 @@ function initiateFile() {
                         Item: {
                             'Image': { S: mess[i].attachments[0].url },
                             'poster': { S: mess[i].name },
-                            'date': { N: mess[i].created_at },
-                            'hash': { N: 0 },
-                            'favorites': { N: mess[i].favorited_by.length }
+                            'date': { N: mess[i].created_at.toString() },
+                            'hash': { N: '0' },
+                            'favorites': { N: mess[i].favorited_by.length.toString() }
                         }
                     }
                     var test = findAllMessages(mess[i].id);
@@ -170,9 +170,9 @@ function findAllMessages(messageID) {
                                 Item: {
                                     'Image': { S: mess[i].attachments[0].url },
                                     'poster': { S: mess[i].name },
-                                    'date': { N: mess[i].created_at },
-                                    'hash': { N: 0 },
-                                    'favorites': { N: mess[i].favorited_by.length }
+                                    'date': { N: mess[i].created_at.toString() },
+                                    'hash': { N: '0' },
+                                    'favorites': { N: mess[i].favorited_by.length.toString() }
                                 }
                             }
                             dynamo.putItem(params, function (err, data) {
