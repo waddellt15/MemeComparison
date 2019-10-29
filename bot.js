@@ -104,28 +104,46 @@ function pushData() {
     AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var s3 = new AWS.S3();
     //download our main file
-    var request = HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
+    //var request = HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
         //if (err) throw err;
+    //});
+    var params = {
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: "newfile.txt"
+    }
+    s3.getObject(params, function (err, data){
+        if (err) console.log(err, err.stack); // an error occurred
+        else console.log(data);           // successful response
     });
-    //write to our main filel
-    fs.appendFile('newfile.txt', returnState, function (err) {
+    //write to our main file
+    fs.appendFileSync('newfile.txt', returnState, function (err) {
         if (err) throw err;
         console.log('file is edited.');
     });
-    // read out main file, convert it into bas64Data and then upload as text file
-    fs.readFile('newfile.txt', function (err, data) {
-        if (err) throw err;
-        var base64data = new Buffer(data, 'binary');
-        s3.putObject({
-            Bucket: process.env.S3_BUCKET_NAME,
-            Key: 'newfile.txt',
-            Body: base64data,
-            ACL: 'public-read'
-        }, function (resp) {
-            console.log(arguments);
-            console.log('Successfully uploaded package.');
-        });
+    s3.putObject({
+        Bucket: process.env.S3_BUCKET_NAME,
+        Key: 'newfile.txt',
+        Body: data,
+        ACL: 'public-read'
+    }, function (resp) {
+        console.log(arguments);
+        console.log('Successfully uploaded package.');
     });
+        
+    // read out main file, convert it into bas64Data and then upload as text file
+    //fs.readFile('newfile.txt', function (err, data) {
+       // if (err) throw err;
+       // var base64data = new Buffer(data, 'binary');
+       // s3.putObject({
+       //     Bucket: process.env.S3_BUCKET_NAME,
+       //     Key: 'newfile.txt',
+       //     Body: base64data,
+       //     ACL: 'public-read'
+       // }, function (resp) {
+       //     console.log(arguments);
+       //     console.log('Successfully uploaded package.');
+       // });
+    //});
 
 }
 function newPhoto() {
