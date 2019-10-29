@@ -268,7 +268,7 @@ function hashing(url) {
                     if (!err) console.log("we did it");
                     dhash('reformat.png', function (err, hash) {
                         if (err) console.log(err);
-                        hashT = hash;
+                        hashT = parseInt(hash.toString(),16).toString(2);
                         fs.unlink('reformat.png', function (err, data) {
                             if (err) {
                                 console.log("Error", err);
