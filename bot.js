@@ -170,7 +170,7 @@ function findAllMessages(messageID) {
                                     console.log("Success", data);
                                 }
                             });
-                            await sleep(200);
+                            await sleep(20000);
                             returnCount++;
                             console.log(returnCount);
                         }
@@ -179,7 +179,7 @@ function findAllMessages(messageID) {
             }
             console.log(mess[mess.length - 1].id);
             console.log(messageID);
-            setTimeout(findAllMessages(mess[mess.length - 1].id));
+            setTimeout(findAllMessages(mess[mess.length - 1].id),30000);
         });
 
     });
