@@ -3,6 +3,7 @@ var AWS = require('aws-sdk');
 var fs = require('fs');
 var botID = "0b09c5795270482bb28ecfb5ef";
 var returnCount = 0;
+var gm = require('gm');
 
 function respond() {
     var request = JSON.parse(this.req.chunks[0]);
@@ -210,6 +211,15 @@ function sleep(ms) {
             resolve(ms);
         }, ms);
     });
+}
+function hashing() {
+
+    gm('/path/to/my/img.jpg')
+        .resize(240, 240)
+        .noProfile()
+        .write('/path/to/resize.png', function (err) {
+            if (!err) console.log('done');
+        });
 }
 function postMessage() {
     var botResponse, options, body, botReq;
