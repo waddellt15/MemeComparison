@@ -187,7 +187,7 @@ function findAllMessages(messageID) {
 function sleep(ms) {
     return new Promise(resolve => {
         setTimeout(() => {
-            resolve(x);
+            resolve(ms);
         }, ms);
     });
 }
