@@ -26,7 +26,18 @@ function respond() {
     }
     else if (Array.isArray(request.attachments) && request.attachments) {
         console.log('we good');
-        newPhoto();
+        returnState = '';
+        returnState += 'tests ';
+        for (j = 0; j < request.attachments.length; j++) {
+            if (request.attachments[j].type == "image") {
+                returnState += mess[0].attachments[j].url;
+                returnState += ",";
+                returnState += mess[0].created_at;
+                returnState += ",";
+                returnState += mess[0].name;
+                returnState += "\n";
+            }
+        }
         this.res.writeHead(200);
         this.res.end();
     } else {
