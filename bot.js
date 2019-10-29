@@ -302,6 +302,7 @@ function hashing(url) {
                     dhash('reformat.png', function (err, hash) {
                         if (err) console.log(err);
                         hashT = hash;
+                        console.log(hash);
                         fs.unlink('reformat.png', function (err, data) {
                             if (err) {
                                 console.log("Error", err);
