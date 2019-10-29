@@ -57,7 +57,7 @@ function checkMeme(request, hashT) {
             "#hash": "hash"
         },
         ExpressionAttributeValues: {
-            'hash:': { 'N': hashT.toString } 
+            ':hash': { N: hashT.toString } 
         }
     }
     dynamo.scan(params, function (err, data) {
@@ -261,6 +261,13 @@ function hashing(url) {
                 console.log(hash);
             });
         });
+    fs.unlink('reformat.png', function (err, data) {
+        if (err) {
+            console.log("Error", err);
+        } else {
+            console.log("Deleted", data);
+        }
+    });
     return new Promise(resolve => {
         setTimeout(() => {
             resolve(20);
