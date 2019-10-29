@@ -258,29 +258,29 @@ function sleep(ms) {
 }
 function hashing(url) {
     var hashT = '';
-    gm(request(url))
-        .resize(16, 16)
-        .noProfile()
-        .colorspace('GRAY')
-        .write('reformat.png', function (err) {
-            if (!err) console.log("we did it");
-            dhash('reformat.png', function (err, hash) {
-                if (err) console.log(err);
-                fs.unlink('reformat.png', function (err, data) {
-                    if (err) {
-                        console.log("Error", err);
-                    } else {
-                        console.log("Deleted");
-                    }
+    return new Promise(resolve => {
+        setTimeout(() => {
+            gm(request(url))
+                .resize(16, 16)
+                .noProfile()
+                .colorspace('GRAY')
+                .write('reformat.png', function (err) {
+                    if (!err) console.log("we did it");
+                    dhash('reformat.png', function (err, hash) {
+                        if (err) console.log(err);
+                        hashT = hash;
+                        console.log(hash);
+                        fs.unlink('reformat.png', function (err, data) {
+                            if (err) {
+                                console.log("Error", err);
+                            } else {
+                                console.log("Deleted");
+                            }
+                        });
+                    });
                 });
-                hashT = hash;
-                return new Promise(resolve => {
-                    setTimeout(() => {
-                        resolve(hashT);
-                    }, 20);
-                });
-            });
-        });
+            resolve(hashT);
+        }, 20);
 }
 
 function postMessage() {
