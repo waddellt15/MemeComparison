@@ -189,6 +189,7 @@ function sleep(ms) {
         setTimeout(() => {
             resolve(x);
         }, ms);
+    });
 }
 function postMessage() {
     var botResponse, options, body, botReq;
