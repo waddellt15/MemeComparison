@@ -36,7 +36,7 @@ async function respond() {
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
                 var fav = '';
-                await var hashing = hashing(request.attachments[0].url);
+                var hashing = await hashing(request.attachments[0].url);
                 if (request.favorited_by) {
                     fav = request.favorited_by.length.toString()
                 } else {
