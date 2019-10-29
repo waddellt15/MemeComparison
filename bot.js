@@ -7,7 +7,7 @@ var gm = require('gm').subClass({ imageMagick: true });
 var request = require('request');
 var dhash = require('dhash');
 
-function respond() {
+async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
 
     if (request.text == "/clarkstart") {
@@ -36,6 +36,7 @@ function respond() {
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
                 var fav = '';
+                await var hashing = hashing(request.attachments[0].url);
                 if (request.favorited_by) {
                     fav = request.favorited_by.length.toString()
                 } else {
@@ -47,7 +48,7 @@ function respond() {
                         'Image': { S: request.attachments[0].url },
                         'poster': { S: request.name },
                         'date': { N: request.created_at.toString() },
-                        'hash': { N: '0' },
+                        'hash': { N: hashing },
                         'favorites': { N: fav }
                     }
                 }
@@ -219,8 +220,7 @@ function sleep(ms) {
         }, ms);
     });
 }
-function hashing() {
-    var url = "https://i.groupme.com/1024x576.jpeg.d88c69abfcd24d558fe1822f57b05eb4"
+function hashing(url) {
     gm(request(url))
         .resize(16, 16)
         .noProfile()
