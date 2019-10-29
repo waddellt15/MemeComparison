@@ -25,34 +25,10 @@ function respond() {
         this.res.end();
     }
     else if (Array.isArray(request.attachments) && request.attachments) {
-        console.log('we good');
-        returnState = '';
-        AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
-        var dynamo = new AWS.DynamoDB();
-        var params = {
-            TableName: 'clarkteems3000',
-            Item: {
-                'Image': { S: 'test' },
-                'Eat': {S: 'poo'}
-            }
-        }
-        dynamo.putItem(params, function (err, data) {
-            if (err) {
-                console.log("Error", err);
-            } else {
-                console.log("Success", data);
-            }
-        });
         returnState += 'tests ';
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
                 console.log('we good');
-                returnState += request.attachments[j].url;
-                returnState += ",";
-                returnState += request.created_at;
-                returnState += ",";
-                returnState += request.name;
-                returnState += "\n";
             }
         }
         this.res.writeHead(200);
@@ -86,10 +62,12 @@ function getGroups() {
     });
 }
 function initiateFile() {
+    AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+    var dynamo = new AWS.DynamoDB();
     // creating empty data file
     var data = '';
     //get all the messages
-    HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
         if (res.statusCode == 200) {
             //neat
         } else {
@@ -107,64 +85,30 @@ function initiateFile() {
             for (i = 0; i < mess.length; i++) {
                 if (mess[i].attachments.length && mess[i].attachments[0].type == "image") {
                     // need to check if this you can get this and before
+                    var params = {
+                        TableName: 'clarkteems3000',
+                        Item: {
+                            'Image': { S: mess[i].attachments[0].url },
+                            'poster': { S: mess[i].name },
+                            'date': { N: mess[i].created_at },
+                            'hash': { N: 0 },
+                            'favorites': { N: mess[i].favorited_by.length }
+                        }
+                    }
                     var test = findAllMessages(mess[i].id);
                     break;
                 }
             }
+            dynamo.putItem(params, function (err, data) {
+                if (err) {
+                    console.log("Error", err);
+                } else {
+                    console.log("Success", data);
+                }
+            });
         });
 
     });
-}
-function pushData() {
-    // configure aws and start process
-    //download our main file
-    HTTPS.get("https://groupmeclark3000.s3.us-east-2.amazonaws.com/newfile.txt", function (err) {
-        //if (err) throw err;
-    });
-    var params = {
-        Bucket: process.env.S3_BUCKET_NAME,
-        Key: "newfile.txt"
-    }
-    //s3.getObject(params, function (err, data){
-    //    if (err) console.log(err, err.stack); // an error occurred
-    //    else console.log(data);           // successful response
-    //});
-    //write to our main file
-    returnState = 'testing';
-    fs.appendFile('newfile.txt', returnState, function (err) {
-        if (err) throw err;
-        console.log('file is edited.');
-    });
-    fs.readFile('newfile.txt', function (err, data) {
-        console.log("made it 2");
-        if (err) throw err;
-        s3.putObject({
-            Bucket: process.env.S3_BUCKET_NAME,
-            Key: 'newfile.txt',
-            Body: data,
-            ACL: 'public-read'
-        }, function (resp) {
-            console.log(arguments);
-            console.log('Successfully uploaded package.');
-        });
-    });
-
-        
-    // read out main file, convert it into bas64Data and then upload as text file
-    //fs.readFile('newfile.txt', function (err, data) {
-       // if (err) throw err;
-       // var base64data = new Buffer(data, 'binary');
-       // s3.putObject({
-       //     Bucket: process.env.S3_BUCKET_NAME,
-       //     Key: 'newfile.txt',
-       //     Body: base64data,
-       //     ACL: 'public-read'
-       // }, function (resp) {
-       //     console.log(arguments);
-       //     console.log('Successfully uploaded package.');
-       // });
-    //});
-
 }
 function newPhoto() {
     var data = '';
@@ -185,12 +129,7 @@ function newPhoto() {
             var mess = JSON.parse(data).response.messages;
             for (j = 0; j < mess[0].attachments[j].length; j++) {
                 if (mess[0].attachments[j].type == "image") {
-                    returnState += mess[0].attachments[j].url;
-                    returnState += ",";
-                    returnState += mess[0].created_at;
-                    returnState += ",";
-                    returnState += mess[0].name;
-                    returnState += "\n";
+                    //update database
                 }
             }
 
@@ -199,6 +138,8 @@ function newPhoto() {
     });
 }
 function findAllMessages(messageID) {
+    AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+    var dynamo = new AWS.DynamoDB();
     HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?before_id=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
         if (res.statusCode == 200) {
             //neat
@@ -224,15 +165,23 @@ function findAllMessages(messageID) {
                 if (mess[i].attachments.length) {
                     for (j = 0; j < mess[i].attachments.length; j++) {
                         if (mess[i].attachments[j].type == "image") {
-                            returnState += mess[i].attachments[j].url;
-                            returnState += ",";
-                            returnState += mess[i].created_at;
-                            returnState += ",";
-                            returnState += mess[i].name;
-                            returnState += "\n";
-                            //console.log(mess[i].attachments[j].url);
-                            //console.log(mess[i].created_at);
-                            returnCount += 1;
+                            var params = {
+                                TableName: 'clarkteems3000',
+                                Item: {
+                                    'Image': { S: mess[i].attachments[0].url },
+                                    'poster': { S: mess[i].name },
+                                    'date': { N: mess[i].created_at },
+                                    'hash': { N: 0 },
+                                    'favorites': { N: mess[i].favorited_by.length }
+                                }
+                            }
+                            dynamo.putItem(params, function (err, data) {
+                                if (err) {
+                                    console.log("Error", err);
+                                } else {
+                                    console.log("Success", data);
+                                }
+                            });
                             console.log(returnCount);
                             //console.log(mess[i].id);
                         }
