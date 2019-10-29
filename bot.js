@@ -119,7 +119,7 @@ function initiateFile() {
     });
 }
 
-function findAllMessages(messageID) {
+async function findAllMessages(messageID) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
     HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?before_id=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
@@ -179,11 +179,16 @@ function findAllMessages(messageID) {
             }
             console.log(mess[mess.length - 1].id);
             console.log(messageID);
-            await sleep(30000);
+            await sleep(30000)
             setTimeout(findAllMessages(mess[mess.length - 1].id),30000);
         });
 
     });
+}
+function sleep(ms) {
+    setTimeout(function () {
+        return; 
+    }, ms);
 }
 function postMessage() {
     var botResponse, options, body, botReq;
