@@ -264,16 +264,16 @@ function hashing(url) {
             if (!err) console.log("we did it");
             dhash('reformat.png', function (err, hash) {
                 if (err) console.log(err);
-                console.log(hash);
+                fs.unlink('reformat.png', function (err, data) {
+                    if (err) {
+                        console.log("Error", err);
+                    } else {
+                        console.log("Deleted", data);
+                    }
+                });
+                return hash;
             });
         });
-    fs.unlink('reformat.png', function (err, data) {
-        if (err) {
-            console.log("Error", err);
-        } else {
-            console.log("Deleted", data);
-        }
-    });
     return new Promise(resolve => {
         setTimeout(() => {
             resolve(20);
