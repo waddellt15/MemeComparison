@@ -27,6 +27,12 @@ function respond() {
         var dynamo = new AWS.DynamoDB();
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
+                var fav = '';
+                if (mess[i].favorited_by) {
+                    fav = request.favorited_by.length.toString()
+                } else {
+                    fav = '0'
+                }
                 var params = {
                     TableName: 'clarkteems3000',
                     Item: {
@@ -34,7 +40,7 @@ function respond() {
                         'poster': { S: request.name },
                         'date': { N: request.created_at.toString() },
                         'hash': { N: '0' },
-                        'favorites': { N: request.favorited_by.length.toString() }
+                        'favorites': { N: fav }
                     }
                 }
             }
@@ -92,6 +98,12 @@ function initiateFile() {
             for (i = 0; i < mess.length; i++) {
                 if (mess[i].attachments.length && mess[i].attachments[0].type == "image") {
                     // need to check if this you can get this and before
+                    var fav = '';
+                    if (mess[i].favorited_by) {
+                        fav = mess[i].favorited_by.length.toString()
+                    } else {
+                        fav = '0'
+                    }
                     var params = {
                         TableName: 'clarkteems3000',
                         Item: {
