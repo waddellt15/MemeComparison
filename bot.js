@@ -49,7 +49,7 @@ async function respond() {
                         'Image': { S: request.attachments[0].url },
                         'poster': { S: request.name },
                         'date': { N: request.created_at.toString() },
-                        'hash': { N: hashT },
+                        'hash': { N: hashT.toString() },
                         'favorites': { N: fav }
                     }
                 }
