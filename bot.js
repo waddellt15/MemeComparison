@@ -32,9 +32,9 @@ function respond() {
             if (request.attachments[j].type == "image") {
                 returnState += request.attachments[j].url;
                 returnState += ",";
-                returnState += mess[0].created_at;
+                returnState += request.created_at;
                 returnState += ",";
-                returnState += mess[0].name;
+                returnState += request.name;
                 returnState += "\n";
             }
         }
