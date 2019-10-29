@@ -4,6 +4,7 @@ var fs = require('fs');
 var botID = "0b09c5795270482bb28ecfb5ef";
 var returnCount = 0;
 var gm = require('gm');
+var request = require('request');
 
 function respond() {
     var request = JSON.parse(this.req.chunks[0]);
@@ -20,6 +21,11 @@ function respond() {
     }
     else if (request.text == "/getgroups") {
         getGroups();
+        this.res.writeHead(200);
+        this.res.end();
+    }
+    else if (request.text == "/convert") {
+        hashing();
         this.res.writeHead(200);
         this.res.end();
     }
@@ -213,11 +219,9 @@ function sleep(ms) {
     });
 }
 function hashing() {
-
-    gm('/path/to/my/img.jpg')
-        .resize(240, 240)
-        .noProfile()
-        .write('/path/to/resize.png', function (err) {
+    var url = "https://i.groupme.com/1024x576.jpeg.d88c69abfcd24d558fe1822f57b05eb4"
+    gm(request(url))
+        .write('reformat.png', function (err) {
             if (!err) console.log('done');
         });
 }
