@@ -30,7 +30,7 @@ function respond() {
         returnState += 'tests ';
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
-                returnState += mess[0].attachments[j].url;
+                returnState += request.attachments[j].url;
                 returnState += ",";
                 returnState += mess[0].created_at;
                 returnState += ",";
