@@ -31,45 +31,73 @@ async function respond() {
         this.res.end();
     }
     else if (Array.isArray(request.attachments) && request.attachments) {
-        AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
-        var dynamo = new AWS.DynamoDB();
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
-                var fav = '';
                 var hashT = '';
                 hashT = await hashing(request.attachments[0].url);
-                if (request.favorited_by) {
-                    fav = request.favorited_by.length.toString()
-                } else {
-                    fav = '0'
-                }
-                var params = {
-                    TableName: 'clarkteems3000',
-                    Item: {
-                        'Image': { S: request.attachments[0].url },
-                        'poster': { S: request.name },
-                        'date': { N: request.created_at.toString() },
-                        'hash': { N: hashT.toString() },
-                        'favorites': { N: fav }
-                    }
-                }
-                dynamo.putItem(params, function (err, data) {
-                    if (err) {
-                        console.log("Error", err);
-                    } else {
-                        console.log("Success", data);
-                    }
-                });
+                await checkMeme(request, hashT.toString);
             }
         }
 
         this.res.writeHead(200);
         this.res.end();
     } else {
-        console.log("don't care");
         this.res.writeHead(200);
         this.res.end();
     }
+}
+function checkMeme(request, hashT) {
+    AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+    var dynamo = new AWS.DynamoDB();
+    var params = {
+        TableName: 'clarkteems3000',
+        ProjectionExpression: "poster, date",
+        FilterExpression: "#hash = :hash",
+        ExpressionAttributeNames: {
+            "#hash": "hash",
+        },
+        ExpressionAttributeValues: {
+            ':hash': hashT 
+        }
+    }
+    dynamo.scan(params, function (err, data) {
+        if (err) {
+            console.log("Error", err);
+        } else {
+            console.log("Success", data);
+        }
+    });
+
+}
+function reposter(request, original) {
+
+}
+function addMeme(request, hashT) {
+    AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+    var dynamo = new AWS.DynamoDB();
+    var fav = '';
+    if (request.favorited_by) {
+        fav = request.favorited_by.length.toString()
+    } else {
+        fav = '0'
+    }
+    var params = {
+        TableName: 'clarkteems3000',
+        Item: {
+            'Image': { S: request.attachments[0].url },
+            'poster': { S: request.name },
+            'date': { N: request.created_at.toString() },
+            'hash': { N: hashT.toString() },
+            'favorites': { N: fav }
+        }
+    }
+    dynamo.putItem(params, function (err, data) {
+        if (err) {
+            console.log("Error", err);
+        } else {
+            console.log("Success", data);
+        }
+    });
 }
 function getGroups() {
     var data = '';
