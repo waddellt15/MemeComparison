@@ -116,19 +116,23 @@ function pushData() {
         else console.log(data);           // successful response
     });
     //write to our main file
-    fs.appendFile('newfile.txt', returnState, function (err) {
+    fs.appendFileSync('newfile.txt', returnState, 'utf8', function (err) {
         if (err) throw err;
         console.log('file is edited.');
     });
-    s3.putObject({
-        Bucket: process.env.S3_BUCKET_NAME,
-        Key: 'newfile.txt',
-        Body: data,
-        ACL: 'public-read'
-    }, function (resp) {
-        console.log(arguments);
-        console.log('Successfully uploaded package.');
+    fs.readFileSync('newFile.txt', function (err, data) {
+        if (err) throw err;
+        s3.putObject({
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key: 'newfile.txt',
+            Body: data,
+            ACL: 'public-read'
+        }, function (resp) {
+            console.log(arguments);
+            console.log('Successfully uploaded package.');
+        });
     });
+
         
     // read out main file, convert it into bas64Data and then upload as text file
     //fs.readFile('newfile.txt', function (err, data) {
