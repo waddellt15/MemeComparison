@@ -117,7 +117,7 @@ function pushData() {
     });
     //write to our main file
     returnState = 'testing';
-    fs.appendFileSync('newfile.txt', returnState, 'utf8', function (err) {
+    fs.appendFile('newfile.txt', returnState, function (err) {
         if (err) throw err;
         console.log('file is edited.');
     });
