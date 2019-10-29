@@ -224,6 +224,10 @@ function hashing() {
     gm(request(url))
         .resize(16, 16)
         .noProfile
+        .write('reformat.png', function (err) {
+            if (!err) console.log("we did it");
+        });
+    gm('reformat.png')
         .colorspace('GRAY')
         .write('reformat.png', function (err) {
             if (!err) console.log("we did it");
