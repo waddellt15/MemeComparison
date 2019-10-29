@@ -164,6 +164,12 @@ function findAllMessages(messageID) {
                                     console.log("Success", data);
                                 }
                             });
+                            var delayInMilliseconds = 200; //1 second
+
+                            setTimeout(function () {
+                                //your code to be executed after 1 second
+                            }, delayInMilliseconds);
+                            returnCount++;
                             console.log(returnCount);
                         }
                     }
