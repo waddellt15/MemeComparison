@@ -278,7 +278,7 @@ function hashing(url) {
         });
     return new Promise(resolve => {
         setTimeout(() => {
-            resolve(hash);
+            resolve(hashT);
         }, 20);
     });
 }
