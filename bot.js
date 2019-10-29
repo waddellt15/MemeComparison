@@ -273,14 +273,14 @@ function hashing(url) {
                         console.log("Deleted");
                     }
                 });
-               hashT = hash;
+                hashT = hash;
+                return new Promise(resolve => {
+                    setTimeout(() => {
+                        resolve(hashT);
+                    }, 20);
+                });
             });
         });
-    return new Promise(resolve => {
-        setTimeout(() => {
-            resolve(hashT);
-        }, 20);
-    });
 }
 
 function postMessage() {
