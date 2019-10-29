@@ -78,8 +78,38 @@ function checkMeme(request, hashT) {
 
 }
 function reposter(request, original) {
+    var botResponse, options, body, botReq;
+    options = {
+        hostname: 'api.groupme.com',
+        path: '/v3/bots/post',
+        method: 'POST'
+    };
+    botResponse = "REPOST, Original post by:" + original.Items[0].poster;
+
+    body = {
+        "bot_id": botID,
+        "text": botResponse
+    };
+
+    console.log('sending ' + botResponse + ' to ' + botID);
+
+    botReq = HTTPS.request(options, function (res) {
+        if (res.statusCode == 202) {
+            //neat
+        } else {
+            console.log('rejecting bad status code ' + res.statusCode);
+        }
+    });
+
+    botReq.on('error', function (err) {
+        console.log('error posting message ' + JSON.stringify(err));
+    });
+    botReq.on('timeout', function (err) {
+        console.log('timeout posting message ' + JSON.stringify(err));
+    });
+    botReq.end(JSON.stringify(body));
     console.log("REPOST");
-    //console.log(original.Items[0].poster);
+    console.log(original.Items[0].poster);
 }
 function addMeme(request, hashT) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
