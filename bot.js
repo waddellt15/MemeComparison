@@ -35,8 +35,7 @@ async function respond() {
             if (request.attachments[j].type == "image") {
                 var hashT = '';
                 hashT = await hashing(request.attachments[0].url);
-                console.log(hashT);
-                //await checkMeme(request, hashT);
+                await checkMeme(request, hashT);
             }
         }
 
@@ -48,6 +47,7 @@ async function respond() {
     }
 }
 function checkMeme(request, hashT) {
+    console.log(hashT);
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
     var params = {
@@ -269,7 +269,6 @@ function hashing(url) {
                     dhash('reformat.png', function (err, hash) {
                         if (err) console.log(err);
                         hashT = hash;
-                        console.log(hash);
                         fs.unlink('reformat.png', function (err, data) {
                             if (err) {
                                 console.log("Error", err);
