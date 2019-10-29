@@ -269,7 +269,7 @@ function hashing(url) {
                     if (err) {
                         console.log("Error", err);
                     } else {
-                        console.log("Deleted", data);
+                        console.log("Deleted");
                     }
                 });
                 return hash;
@@ -277,7 +277,7 @@ function hashing(url) {
         });
     return new Promise(resolve => {
         setTimeout(() => {
-            resolve(20);
+            resolve(hash);
         }, 20);
     });
 }
