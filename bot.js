@@ -85,7 +85,7 @@ function reposter(request, original) {
         path: '/v3/bots/post',
         method: 'POST'
     };
-    botResponse = "REPOST @" + original.name + " , Original post by:" + original.Items[0].poster.S;
+    botResponse = "REPOST @" + request.name + " , Original post by:" + original.Items[0].poster.S;
 
     body = {
         "bot_id": botID,
