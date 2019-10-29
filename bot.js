@@ -227,11 +227,12 @@ function hashing() {
         .colorspace('GRAY')
         .write('reformat.png', function (err) {
             if (!err) console.log("we did it");
+            dhash('reformat.png', function (err, hash) {
+                if (err) console.log(err);
+                console.log(hash);
+            });
         });
-    dhash('reformat.png', function (err, hash) {
-        if (err) console.log(err);
-        console.log(hash);
-    });
+
 }
 function postMessage() {
     var botResponse, options, body, botReq;
