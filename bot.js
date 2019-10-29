@@ -179,6 +179,7 @@ function findAllMessages(messageID) {
             }
             console.log(mess[mess.length - 1].id);
             console.log(messageID);
+            await sleep(30000);
             setTimeout(findAllMessages(mess[mess.length - 1].id),30000);
         });
 
