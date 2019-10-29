@@ -30,6 +30,7 @@ function respond() {
         returnState += 'tests ';
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
+                console.log('we good');
                 returnState += request.attachments[j].url;
                 returnState += ",";
                 returnState += request.created_at;
