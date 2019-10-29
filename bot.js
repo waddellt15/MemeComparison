@@ -154,7 +154,8 @@ function findAllMessages(messageID) {
                                     'poster': { S: mess[i].name },
                                     'date': { N: mess[i].created_at.toString() },
                                     'hash': { N: '0' },
-                                    'favorites': { N: mess[i].favorited_by.length.toString() }
+                                    'favorites': { N: if(mess[i].favorited_by.length) { mess[i].favorited_by.length.toString() } else { '0' } }
+
                                 }
                             }
                             dynamo.putItem(params, function (err, data) {
@@ -164,11 +165,6 @@ function findAllMessages(messageID) {
                                     console.log("Success", data);
                                 }
                             });
-                            var delayInMilliseconds = 200; //1 second
-
-                            setTimeout(function () {
-                                //your code to be executed after 1 second
-                            }, delayInMilliseconds);
                             returnCount++;
                             console.log(returnCount);
                         }
@@ -177,7 +173,7 @@ function findAllMessages(messageID) {
             }
             console.log(mess[mess.length - 1].id);
             console.log(messageID);
-            findAllMessages(mess[mess.length - 1].id);
+            findAllMessages(mess[mess.length - 1].id, 200);
         });
 
     });
