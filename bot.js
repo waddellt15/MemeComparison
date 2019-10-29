@@ -240,7 +240,6 @@ function hashing(url) {
     });
 }
 
-}
 function postMessage() {
     var botResponse, options, body, botReq;
 
