@@ -277,10 +277,11 @@ function hashing(url) {
                                 console.log("Deleted");
                             }
                         });
+                        resolve(hashT);
                     });
                 });
-            resolve(hashT);
         }, 20);
+    });
 }
 
 function postMessage() {
