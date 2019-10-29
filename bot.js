@@ -147,6 +147,12 @@ function findAllMessages(messageID) {
                 if (mess[i].attachments.length) {
                     for (j = 0; j < mess[i].attachments.length; j++) {
                         if (mess[i].attachments[j].type == "image") {
+                            var fav = '';
+                            if (mess[i].favorited_by) {
+                                fav = mess[i].favorited_by.length.toString()
+                            } else {
+                                fav = '0'
+                            }
                             var params = {
                                 TableName: 'clarkteems3000',
                                 Item: {
@@ -154,7 +160,7 @@ function findAllMessages(messageID) {
                                     'poster': { S: mess[i].name },
                                     'date': { N: mess[i].created_at.toString() },
                                     'hash': { N: '0' },
-                                    'favorites': { N: mess[i].favorited_by.length.toString() }
+                                    'favorites': { N: fav }
 
                                 }
                             }
