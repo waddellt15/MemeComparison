@@ -224,10 +224,14 @@ function hashing() {
     gm(request(url))
         .resize(16, 16)
         .noProfile
-        .colorspace(gray)
+        .colorspace('GRAY')
         .write('reformat.png', function (err) {
             if (!err) console.log("we did it");
         });
+    dhash('reformat.png', function (err, hash) {
+        if (err) console.log(err);
+        console.log(hash);
+    });
 }
 function postMessage() {
     var botResponse, options, body, botReq;
