@@ -3,7 +3,6 @@ var cool = require('cool-ascii-faces');
 var AWS = require('aws-sdk');
 var fs = require('fs');
 var botID = "0b09c5795270482bb28ecfb5ef";
-var returnState = '';
 var returnCount = 0;
 
 function respond() {
@@ -25,10 +24,20 @@ function respond() {
         this.res.end();
     }
     else if (Array.isArray(request.attachments) && request.attachments) {
-        returnState += 'tests ';
+        AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+        var dynamo = new AWS.DynamoDB();
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
-                console.log('we good');
+                var params = {
+                    TableName: 'clarkteems3000',
+                    Item: {
+                        'Image': { S: request.attachments[0].url },
+                        'poster': { S: request.name },
+                        'date': { N: request.created_at.toString() },
+                        'hash': { N: '0' },
+                        'favorites': { N: request.favorited_by.length.toString() }
+                    }
+                }
             }
         }
         this.res.writeHead(200);
@@ -67,7 +76,7 @@ function initiateFile() {
     // creating empty data file
     var data = '';
     //get all the messages
-    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+    HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
         if (res.statusCode == 200) {
             //neat
         } else {
@@ -80,7 +89,6 @@ function initiateFile() {
 
         // on end iterate through file
         res.on('end', function () {
-            returnState = '';
             var mess = JSON.parse(data).response.messages;
             for (i = 0; i < mess.length; i++) {
                 if (mess[i].attachments.length && mess[i].attachments[0].type == "image") {
@@ -110,37 +118,11 @@ function initiateFile() {
 
     });
 }
-function newPhoto() {
-    var data = '';
-    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?limit=1&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
-        if (res.statusCode == 200) {
-            //neat
-        } else {
-            console.log('rejecting bad status code ' + res.statusCode);
-        }
-        //add the chunks to our var data
-        res.on('data', function (chunk) {
-            data += chunk;
-        });
 
-        // on end iterate through file
-        res.on('end', function () {
-            returnState = '';
-            var mess = JSON.parse(data).response.messages;
-            for (j = 0; j < mess[0].attachments[j].length; j++) {
-                if (mess[0].attachments[j].type == "image") {
-                    //update database
-                }
-            }
-
-
-        });
-    });
-}
 function findAllMessages(messageID) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
-    HTTPS.get('https://api.groupme.com/v3/groups/55230894/messages?before_id=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+    HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?before_id=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
         if (res.statusCode == 200) {
             //neat
         } else {
@@ -183,7 +165,6 @@ function findAllMessages(messageID) {
                                 }
                             });
                             console.log(returnCount);
-                            //console.log(mess[i].id);
                         }
                     }
                 }
