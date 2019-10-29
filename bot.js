@@ -121,8 +121,8 @@ function pushData() {
         if (err) throw err;
         console.log('file is edited.');
     });
-    console.log("made it");
     fs.readFileSync('newfile.txt', 'utf8', function (err, data) {
+        console.log("made it 2");
         if (err) throw err;
         s3.putObject({
             Bucket: process.env.S3_BUCKET_NAME,
