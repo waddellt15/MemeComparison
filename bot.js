@@ -223,11 +223,7 @@ function hashing() {
     var url = "https://i.groupme.com/1024x576.jpeg.d88c69abfcd24d558fe1822f57b05eb4"
     gm(request(url))
         .resize(16, 16)
-        .noProfile
-        .write('reformat.png', function (err) {
-            if (!err) console.log("we did it");
-        });
-    gm('reformat.png')
+        .noProfile()
         .colorspace('GRAY')
         .write('reformat.png', function (err) {
             if (!err) console.log("we did it");
