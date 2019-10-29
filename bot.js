@@ -58,7 +58,7 @@ function checkMeme(request, hashT) {
             "#hash": "hash"
         },
         ExpressionAttributeValues: {
-            ':hash': { N: hashT.toString() } 
+            ':hash': { S: hashT.toString() } 
         }
     }
     dynamo.scan(params, function (err, data) {
@@ -94,7 +94,7 @@ function addMeme(request, hashT) {
             'Image': { S: request.attachments[0].url },
             'poster': { S: request.name },
             'date': { N: request.created_at.toString() },
-            'hash': { N: hashT.toString() },
+            'hash': { S: hashT.toString() },
             'favorites': { N: fav }
         }
     }
@@ -163,7 +163,7 @@ function initiateFile() {
                             'Image': { S: mess[i].attachments[0].url },
                             'poster': { S: mess[i].name },
                             'date': { N: mess[i].created_at.toString() },
-                            'hash': { N: '0' },
+                            'hash': { S: '' },
                             'favorites': { N: mess[i].favorited_by.length.toString() }
                         }
                     }
@@ -223,14 +223,14 @@ function findAllMessages(messageID) {
                                     'Image': { S: mess[i].attachments[0].url },
                                     'poster': { S: mess[i].name },
                                     'date': { N: mess[i].created_at.toString() },
-                                    'hash': { N: '0' },
+                                    'hash': { S: '' },
                                     'favorites': { N: fav }
 
                                 }
                             }
                             dynamo.putItem(params, function (err, data) {
                                 if (err) {
-                                    console.log("Err/or", err);
+                                    console.log("Error", err);
                                 } else {
                                     console.log("Success", data);
                                 }
