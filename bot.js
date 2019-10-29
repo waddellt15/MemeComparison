@@ -64,13 +64,19 @@ function checkMeme(request, hashT) {
         if (err) {
             console.log("Error", err);
         } else {
-            console.log("Success", data);
+            if (data.count == 0) {
+                addMeme(request, hashT);
+            }
+            else {
+                reposter(request, data);
+            }
         }
     });
 
 }
 function reposter(request, original) {
-
+    console.log("REPOST");
+    console.log(original.Items[0].poster);
 }
 function addMeme(request, hashT) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
