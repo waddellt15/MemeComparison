@@ -257,6 +257,7 @@ function sleep(ms) {
     });
 }
 function hashing(url) {
+    var hashT = '';
     gm(request(url))
         .resize(16, 16)
         .noProfile()
@@ -272,7 +273,7 @@ function hashing(url) {
                         console.log("Deleted");
                     }
                 });
-                return hash;
+               hashT = hash;
             });
         });
     return new Promise(resolve => {
