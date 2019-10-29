@@ -9,7 +9,8 @@
   "dependencies": {
     "director": "",
     "aws-sdk": "2.x",
-    "gm": "1.x"
+    "gm": "1.x",
+    "request": "2.x"
   },
   "engines": {
     "node": "13.x"
