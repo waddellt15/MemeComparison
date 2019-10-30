@@ -298,6 +298,7 @@ function hashing(url) {
                 .colorspace('GRAY')
                 .write('reformat.png', function (err) {
                     if (!err) console.log("we did it");
+                    uploadfile()
                     dhash('reformat.png', function (err, hash) {
                         if (err) console.log(err);
                         hashT = hash;
