@@ -311,8 +311,9 @@ function hashing(url) {
                             }
                         });
                         imageHash
-                            .hash('reformat.png', 8, 'hex')
+                            .syncHash('reformat.png', 16, 'hex')
                             .then((hash) => {
+                                console.log("new hash");
                                 console.log(hash.hash); // '83c3d381c38985a5'
                                 console.log(hash.type); // 'blockhash8'
                             });
