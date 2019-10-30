@@ -51,9 +51,9 @@ function checkMeme(request, hashT) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
     var params = {
-        TableName: 'clarkteems3000',
+        TableName: 'clarkteems4000',
         //ProjectionExpression: "poster, date",
-        FilterExpression: "#hash = :hash",
+        KeyConditionExpression: "#hash = :hash",
         ExpressionAttributeNames: {
             "#hash": "hash"
         },
@@ -62,11 +62,10 @@ function checkMeme(request, hashT) {
         }
     }
     console.log(request);
-    dynamo.scan(params, function (err, data) {
+    dynamo.query(params, function (err, data) {
         if (err) {
             console.log("Error", err);
         } else {
-            console.log(data);
             console.log(data.Count);
             if (data.Count == 0) {
                 addMeme(request, hashT);
@@ -122,7 +121,7 @@ function addMeme(request, hashT) {
         fav = '0'
     }
     var params = {
-        TableName: 'clarkteems3000',
+        TableName: 'clarkteems4000',
         Item: {
             'Image': { S: request.attachments[0].url },
             'poster': { S: request.name },
@@ -251,7 +250,7 @@ function findAllMessages(messageID) {
                                 fav = '0'
                             }
                             var params = {
-                                TableName: 'clarkteems3000',
+                                TableName: 'clarkteems4000',
                                 Item: {
                                     'Image': { S: mess[i].attachments[0].url },
                                     'poster': { S: mess[i].name },
