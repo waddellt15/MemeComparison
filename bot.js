@@ -6,6 +6,7 @@ var returnCount = 0;
 var gm = require('gm').subClass({ imageMagick: true });
 var request = require('request');
 var dhash = require('dhash');
+var imageHash = require('node-image-hash');
 
 async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
@@ -309,6 +310,12 @@ function hashing(url) {
                                 console.log("Deleted");
                             }
                         });
+                        imageHash
+                            .hash('reformat.png', 8, 'hex')
+                            .then((hash) => {
+                                console.log(hash.hash); // '83c3d381c38985a5'
+                                console.log(hash.type); // 'blockhash8'
+                            });
                         resolve(hashT);
                     });
                 });

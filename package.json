@@ -11,6 +11,7 @@
     "aws-sdk": "2.x",
     "gm": "1.x",
     "dhash": "0.x",
+    "node-image-hash": "1.x",
     "request": "2.x"
   },
   "engines": {
