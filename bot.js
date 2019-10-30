@@ -290,8 +290,6 @@ function sleep(ms) {
 }
 function hashing(url) {
     var hashT = '';
-    AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
-    var s3 = new AWS.S3();
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
@@ -300,33 +298,41 @@ function hashing(url) {
                 .colorspace('GRAY')
                 .write('reformat.png', function (err) {
                     if (!err) console.log("we did it");
-                    s3.putObject({
-                        Bucket: process.env.S3_BUCKET_NAME,
-                        Key: 'reformat.png',
-                        Body: base64data,
-                        ACL: 'public-read'
-                    }, function (resp) {
-                        console.log(arguments);
-                        console.log('Successfully uploaded package.');
-                    });
                     dhash('reformat.png', function (err, hash) {
                         if (err) console.log(err);
                         hashT = hash;
                         console.log(hash);
-                        fs.unlink('reformat.png', function (err, data) {
-                            if (err) {
-                                console.log("Error", err);
-                            } else {
-                                console.log("Deleted");
-                            }
-                        });
                         resolve(hashT);
                     });
                 });
         }, 20);
     });
 }
+function uploadfile() {
+    AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+    var s3 = new AWS.S3();
+    fs.readFile('reformat.png', function (err, data) {
+        if (err) { throw err; }
 
+        var base64data = new Buffer(data, 'binary');
+        s3.putObject({
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key: 'reformat.png',
+            Body: base64data,
+            ACL: 'public-read'
+        }, function (resp) {
+                console.log(arguments);
+                fs.unlink('reformat.png', function (err, data) {
+                    if (err) {
+                        console.log("Error", err);
+                    } else {
+                        console.log("Deleted");
+                    }
+                });
+            console.log('Successfully uploaded package.');
+        });
+    });
+}
 function postMessage() {
     var botResponse, options, body, botReq;
 
