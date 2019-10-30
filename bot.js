@@ -299,6 +299,13 @@ function hashing(url) {
                 .colorspace('GRAY')
                 .write('reformat.png', function (err) {
                     if (!err) console.log("we did it");
+                    imageHash
+                        .syncHash('reformat.png', 16, 'hex')
+                        .then((hash) => {
+                            console.log("new hash");
+                            console.log(hash.hash); // '83c3d381c38985a5'
+                            console.log(hash.type); // 'blockhash8'
+                        });
                     dhash('reformat.png', function (err, hash) {
                         if (err) console.log(err);
                         hashT = hash;
@@ -310,13 +317,6 @@ function hashing(url) {
                                 console.log("Deleted");
                             }
                         });
-                        imageHash
-                            .syncHash('reformat.png', 16, 'hex')
-                            .then((hash) => {
-                                console.log("new hash");
-                                console.log(hash.hash); // '83c3d381c38985a5'
-                                console.log(hash.type); // 'blockhash8'
-                            });
                         resolve(hashT);
                     });
                 });
