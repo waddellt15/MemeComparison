@@ -293,7 +293,7 @@ function hashing(url) {
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
-                .resize(16, 16)
+                .resize(8, 8)
                 .noProfile()
                 .colorspace('GRAY')
                 .write('reformat.png', function (err) {
