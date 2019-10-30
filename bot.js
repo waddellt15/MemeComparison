@@ -6,7 +6,6 @@ var returnCount = 0;
 var gm = require('gm').subClass({ imageMagick: true });
 var request = require('request');
 var dhash = require('dhash');
-var imageHash = require('node-image-hash');
 
 async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
@@ -291,6 +290,8 @@ function sleep(ms) {
 }
 function hashing(url) {
     var hashT = '';
+    AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+    var s3 = new AWS.S3();
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
@@ -299,13 +300,15 @@ function hashing(url) {
                 .colorspace('GRAY')
                 .write('reformat.png', function (err) {
                     if (!err) console.log("we did it");
-                    imageHash
-                        .syncHash('reformat.png', 16, 'hex')
-                        .then((hash) => {
-                            console.log("new hash");
-                            console.log(hash.hash); // '83c3d381c38985a5'
-                            console.log(hash.type); // 'blockhash8'
-                        });
+                    s3.putObject({
+                        Bucket: process.env.S3_BUCKET_NAME,
+                        Key: 'reformat.png',
+                        Body: base64data,
+                        ACL: 'public-read'
+                    }, function (resp) {
+                        console.log(arguments);
+                        console.log('Successfully uploaded package.');
+                    });
                     dhash('reformat.png', function (err, hash) {
                         if (err) console.log(err);
                         hashT = hash;
