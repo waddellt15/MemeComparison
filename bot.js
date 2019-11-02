@@ -294,8 +294,8 @@ function hashing(url) {
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
-                .resize(size + 1, size + 1, '!')
-                .crop(size,size,1,1)
+                .resize(size, size + 1, '!')
+                .crop(size,size,0,0)
                 .noProfile()
                 .colorspace('GRAY')
                 .write('reformat.png', function (err) {
