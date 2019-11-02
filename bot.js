@@ -290,7 +290,7 @@ function sleep(ms) {
 }
 function hashing(url) {
     var hashT = '';
-    var size = 8;
+    var size = 6;
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
@@ -319,6 +319,7 @@ function hashing(url) {
                         }
                         console.log(Hashn);
                         Hashn = parseInt(Hashn, 2)
+                        console.log(Hashn)
                         console.log(Hashn.toString(16));
                     });
                 });
