@@ -318,7 +318,7 @@ function hashing(url) {
                             }
                         }
                         console.log(Hashn);
-                        console.log(praseInt(Hashn, 16))
+                        console.log(parseInt(Hashn, 16))
                         console.log(parseInt(Hashn, 10))
                         console.log(parseInt(Hashn, 2))
                     });
