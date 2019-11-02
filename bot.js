@@ -5,7 +5,7 @@ var botID = "0b09c5795270482bb28ecfb5ef";
 var returnCount = 0;
 var gm = require('gm').subClass({ imageMagick: true });
 var request = require('request');
-var dhash = require('dhash');
+var getPixels = require("get-pixels")
 
 async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
@@ -293,18 +293,19 @@ function hashing(url) {
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
-                .resize(8, 8)
+                .resize(8, 8, '!')
                 .noProfile()
                 .colorspace('GRAY')
                 .write('reformat.png', function (err) {
                     if (!err) console.log("we did it");
                     uploadfile()
-                    dhash('reformat.png', function (err, hash) {
-                        if (err) console.log(err);
-                        hashT = hash;
-                        console.log(hash);
-                        resolve(hashT);
-                    });
+                    getPixels("reformat.png", function (err, pixels) {
+                        if (err) {
+                            console.log("Bad image path")
+                            return
+                        }
+                        console.log("got pixels", pixels.shape.slice())
+                    })
                 });
         }, 20);
     });
