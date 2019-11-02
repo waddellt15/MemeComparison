@@ -10,7 +10,7 @@
     "director": "",
     "aws-sdk": "2.x",
     "gm": "1.x",
-    "get-pixels": "3.x",
+    "png-js": "0.x",
     "request": "2.x"
   },
   "engines": {

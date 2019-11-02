@@ -5,7 +5,7 @@ var botID = "0b09c5795270482bb28ecfb5ef";
 var returnCount = 0;
 var gm = require('gm').subClass({ imageMagick: true });
 var request = require('request');
-var getPixels = require("get-pixels")
+var PNG = require('png-js')
 
 async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
@@ -299,15 +299,9 @@ function hashing(url) {
                 .write('reformat.png', function (err) {
                     if (!err) console.log("we did it");
                     uploadfile()
-                    getPixels("reformat.png", function (err, pixels) {
-                        if (err) {
-                            console.log("Bad image path")
-                            return
-                        }
-                        //console.log("got pixels", pixels)
-                        console.log("pixels 1,  1", pixels.get(1, 1))
-                        console.log("pixels 1,  1", pixels.data.get(1, 1))
-                    })
+                    PNG.decode('some.png', function (pixels) {
+                        console.log(pixels);
+                    });
                 });
         }, 20);
     });
