@@ -295,7 +295,7 @@ function hashing(url) {
         setTimeout(() => {
             gm(request(url))
                 .resize(size + 1, size + 1, '!')
-                .crop(size,size,size - 1,2)
+                .crop(size,size,1,1)
                 .noProfile()
                 .colorspace('GRAY')
                 .write('reformat.png', function (err) {
