@@ -304,8 +304,8 @@ function hashing(url) {
                             console.log("Bad image path")
                             return
                         }
-                        console.log("got pixels", pixels)
-                        console.log(pixels.get(1,1))
+                        //console.log("got pixels", pixels)
+                        console.log("pixels 1,  1",pixels.get(1,1))
                     })
                 });
         }, 20);
