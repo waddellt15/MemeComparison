@@ -318,7 +318,8 @@ function hashing(url) {
                             }
                         }
                         console.log(Hashn);
-                        console.log(parseInt(Hashn, 10).toString(16))
+                        Hashn = parseInt(Hashn, 2)
+                        console.log(Hashn.toString(16));
                     });
                 });
         }, 20);
