@@ -35,6 +35,7 @@ async function respond() {
             if (request.attachments[j].type == "image") {
                 var hashT = '';
                 hashT = await hashing(request.attachments[0].url);
+                console.log("HEREEE");
                 await checkMeme(request, hashT);
             }
         }
@@ -299,8 +300,7 @@ function hashing(url) {
                 .noProfile()
                 .colorspace('GRAY')
                 .write('reformat.png', function (err) {
-                    if (!err) console.log("we did it");
-                    uploadfile()
+                    if (!err) console.log("hashed");
                     PNG.decode('reformat.png', function (pixels) {
                         var ui32 = new Uint32Array(pixels.buffer, pixels.byteOffset, pixels.byteLength / Uint32Array.BYTES_PER_ELEMENT);
                         var Hashn = '';
