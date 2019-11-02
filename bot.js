@@ -300,7 +300,10 @@ function hashing(url) {
                     if (!err) console.log("we did it");
                     uploadfile()
                     PNG.decode('reformat.png', function (pixels) {
-                        console.log(JSON.parse(pixels));
+                        var arr = [pixels];
+                        var array = pixels;
+                        console.log(arr);
+                        console.log(array);
                     });
                 });
         }, 20);
