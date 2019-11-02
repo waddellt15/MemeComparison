@@ -299,7 +299,7 @@ function hashing(url) {
                 .write('reformat.png', function (err) {
                     if (!err) console.log("we did it");
                     uploadfile()
-                    PNG.decode('some.png', function (pixels) {
+                    PNG.decode('reformat.png', function (pixels) {
                         console.log(pixels);
                     });
                 });
