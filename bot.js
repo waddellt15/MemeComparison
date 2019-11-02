@@ -290,10 +290,11 @@ function sleep(ms) {
 }
 function hashing(url) {
     var hashT = '';
+    var size = 8;
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
-                .resize(8, 8, '!')
+                .resize(size, size, '!')
                 .noProfile()
                 .colorspace('GRAY')
                 .write('reformat.png', function (err) {
@@ -302,6 +303,21 @@ function hashing(url) {
                     PNG.decode('reformat.png', function (pixels) {
                         var ui32 = new Uint32Array(pixels.buffer, pixels.byteOffset, pixels.byteLength / Uint32Array.BYTES_PER_ELEMENT);
                         console.log(ui32);
+                        var Hashn = '';
+                        var total = 0;
+                        for (var i = 0; i < ui32.length; i++) {
+                            total += ui32[i]
+                        }
+                        total = total / (size * size)
+                        for (var i = 0; i < ui32.length; i++) {
+                            if (ui32[i] > total) {
+                                Hashn += '1';
+                            }
+                            else {
+                                Hashn += '0';
+                            }
+                        }
+                        console.log(Hashn);
                     });
                 });
         }, 20);
