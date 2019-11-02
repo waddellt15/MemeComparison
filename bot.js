@@ -290,11 +290,12 @@ function sleep(ms) {
 }
 function hashing(url) {
     var hashT = '';
-    var size = 6;
+    var size = 8;
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
-                .resize(size, size, '!')
+                .resize(size + 1, size + 1, '!')
+                .crop(size,size,size - 1,2)
                 .noProfile()
                 .colorspace('GRAY')
                 .write('reformat.png', function (err) {
@@ -302,7 +303,6 @@ function hashing(url) {
                     uploadfile()
                     PNG.decode('reformat.png', function (pixels) {
                         var ui32 = new Uint32Array(pixels.buffer, pixels.byteOffset, pixels.byteLength / Uint32Array.BYTES_PER_ELEMENT);
-                        console.log(ui32);
                         var Hashn = '';
                         var total = 0;
                         for (var i = 0; i < ui32.length; i++) {
