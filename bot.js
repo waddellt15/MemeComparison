@@ -321,7 +321,7 @@ function hashing(url) {
                         Hashn = parseInt(Hashn, 2)
                         console.log(Hashn)
                         hashT = Hashn.toString(16)
-                        return hashT;
+                        resolve(hashT);
                     });
                 });
         }, 20);
