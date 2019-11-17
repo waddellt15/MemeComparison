@@ -109,9 +109,8 @@ function reposter(request, original) {
         path: '/v3/bots/post',
         method: 'POST'
     };
-	var timeStamp = new Date(0);
-	timeStamp.setUTCSeconds(original.Items[0].date.S);
-    botResponse = "REPOST @" + request.name + " , Original post by:" + original.Items[0].poster.S + " at time: " + timeStamp;
+	var timeStamp = new Date(original.Items[0].date.S);
+    botResponse = "REPOST @" + request.name + " , Original post by:" + original.Items[0].poster.S + ", At time: " + timeStamp;
 
     body = {
         "bot_id": botID,
