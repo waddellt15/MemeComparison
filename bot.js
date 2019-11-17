@@ -93,7 +93,7 @@ function checkMeme(request, hashT, hashTCrop) {
 							reposter(request, data);
 						}
 					}
-				}
+				});
 			}
             else {
                 reposter(request, data);
