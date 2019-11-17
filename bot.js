@@ -192,7 +192,7 @@ function getGroups() {
 
     });
 }
-async function initiateFile() {
+function initiateFile() {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
     // creating empty data file
@@ -210,7 +210,7 @@ async function initiateFile() {
         });
 
         // on end iterate through file
-        res.on('end', function () {
+        res.on('end', async function () {
             var mess = JSON.parse(data).response.messages;
             for (i = 0; i < mess.length; i++) {
                 if (mess[i].attachments.length && mess[i].attachments[0].type == "image") {
@@ -249,7 +249,7 @@ async function initiateFile() {
     });
 }
 
-async function findAllMessages(messageID) {
+function findAllMessages(messageID) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
     HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?before_id=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
