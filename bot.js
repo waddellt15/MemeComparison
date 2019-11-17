@@ -34,9 +34,10 @@ async function respond() {
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
                 var hashT = '';
-                hashT = await hashing(request.attachments[0].url);
-                console.log("HEREEE");
-                await checkMeme(request, hashT);
+				var hashTCrop = '';
+                hashT = await hashing(request.attachments[j].url);
+				hashTCrop = await hashingCrop(request.attachments[j].url);
+                await checkMeme(request, hashT, hashTCrop);
             }
         }
 
@@ -47,7 +48,7 @@ async function respond() {
         this.res.end();
     }
 }
-function checkMeme(request, hashT) {
+function checkMeme(request, hashT, hashTCrop) {
     console.log(hashT);
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
@@ -62,6 +63,17 @@ function checkMeme(request, hashT) {
             ':hash': { S: hashT.toString() } 
         }
     }
+	var paramsCrop = {
+        TableName: 'clarkteems4000',
+        //ProjectionExpression: "poster, date",
+        KeyConditionExpression: "#hash = :hash",
+        ExpressionAttributeNames: {
+            "#hash": "hash"
+        },
+        ExpressionAttributeValues: {
+            ':hash': { S: hashTCrop.toString() } 
+        }
+    }
     console.log(request);
     dynamo.query(params, function (err, data) {
         if (err) {
@@ -69,8 +81,20 @@ function checkMeme(request, hashT) {
         } else {
             console.log(data.Count);
             if (data.Count == 0) {
-                addMeme(request, hashT);
-            }
+			    dynamo.query(paramsCrop, function (err, data) {
+					if (err) {
+						console.log("Error", err);
+					} else {
+						console.log(data.Count);
+						if (data.Count == 0) {				
+							addMeme(request, hashT);
+						}
+						else {
+							reposter(request, data);
+						}
+					}
+				});
+			}
             else {
                 reposter(request, data);
             }
@@ -289,6 +313,42 @@ function sleep(ms) {
         }, ms);
     });
 }
+function hashingCrop(url) {
+    var hashT = '';
+    var size = 8;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            gm(request(url))
+                .resize(size, size + 2, '!')
+                .crop(size,size,0,0)
+                .noProfile()
+                .colorspace('GRAY')
+                .write('reformat.png', function (err) {
+                    if (!err) console.log("hashed");
+                    PNG.decode('reformat.png', function (pixels) {
+                        var ui32 = new Uint32Array(pixels.buffer, pixels.byteOffset, pixels.byteLength / Uint32Array.BYTES_PER_ELEMENT);
+                        var Hashn = '';
+                        var total = 0;
+                        for (var i = 0; i < ui32.length; i++) {
+                            total += ui32[i]
+                        }
+                        total = total / (size * size)
+                        for (var i = 0; i < ui32.length; i++) {
+                            if (ui32[i] > total) {
+                                Hashn += '1';
+                            }
+                            else {
+                                Hashn += '0';
+                            }
+                        }
+                        Hashn = parseInt(Hashn, 2)
+                        hashT = Hashn.toString(16)
+                        resolve(hashT);
+                    });
+                });
+        }, 20);
+    });
+}
 function hashing(url) {
     var hashT = '';
     var size = 8;
@@ -317,9 +377,7 @@ function hashing(url) {
                                 Hashn += '0';
                             }
                         }
-                        console.log(Hashn);
                         Hashn = parseInt(Hashn, 2)
-                        console.log(Hashn)
                         hashT = Hashn.toString(16)
                         resolve(hashT);
                     });
