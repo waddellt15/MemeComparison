@@ -34,7 +34,6 @@ async function respond() {
         for (j = 0; j < request.attachments.length; j++) {
             if (request.attachments[j].type == "image") {
                 var hashT = '';
-				var hashTCrop = '';
                 hashT = await hashing(request.attachments[j].url);
 				hashTCrop = await hashingCrop(request.attachments[j].url);
                 await checkMeme(request, hashT, hashTCrop);
