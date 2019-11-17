@@ -192,7 +192,7 @@ function getGroups() {
 
     });
 }
-function initiateFile() {
+async function initiateFile() {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
     // creating empty data file
@@ -221,13 +221,15 @@ function initiateFile() {
                     } else {
                         fav = '0'
                     }
+					var hashT = '';
+                    hashT = await hashing(mess[i].attachments[0].url);
                     var params = {
-                        TableName: 'clarkteems3000',
+                        TableName: 'clarkteems4000',
                         Item: {
                             'Image': { S: mess[i].attachments[0].url },
                             'poster': { S: mess[i].name },
                             'date': { N: mess[i].created_at.toString() },
-                            'hash': { S: '' },
+                            'hash': { S: hashT.toString() },
                             'favorites': { N: mess[i].favorited_by.length.toString() }
                         }
                     }
@@ -247,7 +249,7 @@ function initiateFile() {
     });
 }
 
-function findAllMessages(messageID) {
+async function findAllMessages(messageID) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
     HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?before_id=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
@@ -281,13 +283,15 @@ function findAllMessages(messageID) {
                             } else {
                                 fav = '0'
                             }
+							var hashT = '';
+							hashT = await hashing(mess[i].attachments[0].url);
                             var params = {
                                 TableName: 'clarkteems4000',
                                 Item: {
                                     'Image': { S: mess[i].attachments[0].url },
                                     'poster': { S: mess[i].name },
                                     'date': { N: mess[i].created_at.toString() },
-                                    'hash': { S: '' },
+                                    'hash': { S: hashT.toString() },
                                     'favorites': { N: fav }
 
                                 }
@@ -299,7 +303,7 @@ function findAllMessages(messageID) {
                                     console.log("Success", data);
                                 }
                             });
-                            await sleep(200);
+                            await sleep(400);
                             returnCount++;
                             console.log(returnCount);
                         }
