@@ -278,13 +278,15 @@ function findAllMessages(messageID) {
                     for (j = 0; j < mess[i].attachments.length; j++) {
                         if (mess[i].attachments[j].type == "image") {
                             var fav = '';
+							var hashT = '';
                             if (mess[i].favorited_by) {
                                 fav = mess[i].favorited_by.length.toString()
                             } else {
                                 fav = '0'
                             }
-							var hashT = '';
-							hashT = await hashing(mess[i].attachments[0].url);
+							if (mess[i].attachments[0].url){
+								hashT = await hashing(mess[i].attachments[0].url);
+							}
                             var params = {
                                 TableName: 'clarkteems4000',
                                 Item: {
@@ -303,7 +305,7 @@ function findAllMessages(messageID) {
                                     console.log("Success", data);
                                 }
                             });
-                            await sleep(600);
+                            await sleep(200);
                             returnCount++;
                             console.log(returnCount);
                         }
@@ -357,7 +359,7 @@ function hashingCrop(url) {
                         resolve(hashT);
                     });
                 });
-        }, 20);
+        }, 200);
     });
 }
 function hashing(url) {
@@ -393,7 +395,7 @@ function hashing(url) {
                         resolve(hashT);
                     });
                 });
-        }, 20);
+        }, 200);
     });
 }
 function uploadfile() {
