@@ -303,7 +303,7 @@ function findAllMessages(messageID) {
                                     console.log("Success", data);
                                 }
                             });
-                            await sleep(400);
+                            await sleep(600);
                             returnCount++;
                             console.log(returnCount);
                         }
