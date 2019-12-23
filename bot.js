@@ -188,9 +188,9 @@ function getGroups() {
 }
 async function presentTime() {
 	postMessage("a little rhymey bullshit here");
-	sleep(1000);
+	await sleep(1000);
 	postMessage("some more rhymey bullshit here");
-	sleep(1000);
+	await sleep(1000);
     postMessage("I'm not sure which of you has been naught or nice, all I know is reposters better fucking think twice");
 }
 function initiateFile() {
