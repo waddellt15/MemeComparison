@@ -83,14 +83,14 @@ function checkMeme(request, hashT, hashTCrop) {
 						if (data.Count == 0) {				
 							addMeme(request, hashT);
 						}
-						else {
-							//reposter(request, data);
+						else if (process.env.ACTIVE == true){
+							reposter(request, data);
 						}
 					}
 				});
 			}
-            else {
-                //reposter(request, data);
+            else if (process.env.ACTIVE == true) {
+                reposter(request, data);
             }
         }
     });
