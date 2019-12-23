@@ -18,7 +18,8 @@ async function respond() {
     }
     else if (request.text == "/unwrap" && request.user_id == '41493727') {
 		postMessage("I'm not sure which of you has been naught or nice, all I know is reposters better fucking think twice");        
-        this.res.writeHead(200);
+        nameChange();
+		this.res.writeHead(200);
         this.res.end();
     }
     else if (request.text == "/getgroups" && request.user_id == '41493727') {
