@@ -192,7 +192,7 @@ function getGroups() {
 function nameChange() {
     options = {
         hostname: 'api.groupme.com',
-        path: '/users/update',
+        path: '/v3/users/update',
         method: 'POST'
     };
 
