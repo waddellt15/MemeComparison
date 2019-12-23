@@ -10,24 +10,19 @@ var PNG = require('png-js')
 async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
 
-    if (request.text == "/clarkstart" && request.user_id == '41493727') {
+    if (request.text == "/placepresent" && request.user_id == '41493727') {
         initiateFile();
-		postMessage("Present wrapped test");
+		postMessage("The present has been nicely put under the tree, you better not fuckign touch it");
         this.res.writeHead(200);
         this.res.end();
     }
-    else if (request.text == "/pushdata" && request.user_id == '41493727') {
-        pushData();
+    else if (request.text == "/unwrap" && request.user_id == '41493727') {
+		postMessage("I'm not sure which of you has been naught or nice, all I know is reposters better fucking think twice");        
         this.res.writeHead(200);
         this.res.end();
     }
     else if (request.text == "/getgroups" && request.user_id == '41493727') {
         getGroups();
-        this.res.writeHead(200);
-        this.res.end();
-    }
-    else if (request.text == "/convert" && request.user_id == '41493727') {
-        hashing();
         this.res.writeHead(200);
         this.res.end();
     }
@@ -192,6 +187,29 @@ function getGroups() {
         });
 
     });
+}
+function nameChange() {
+    options = {
+        hostname: 'api.groupme.com',
+        path: '/users/update',
+        method: 'POST'
+    };
+
+    body = {
+        "name": "unwrapped"
+    };
+
+    botReq = HTTPS.request(options, function (res) {
+        if (res.statusCode == 202) {
+            //neat
+        } else {
+            console.log('rejecting bad status code ' + res.statusCode);
+        }
+    });
+	botReq.on('timeout', function (err) {
+        console.log('timeout posting message ' + JSON.stringify(err));
+    });
+    botReq.end(JSON.stringify(body));
 }
 function initiateFile() {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
