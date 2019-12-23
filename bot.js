@@ -16,9 +16,8 @@ async function respond() {
         this.res.writeHead(200);
         this.res.end();
     }
-    else if (request.text == "/unwrap" && request.user_id == '41493727') {
-		postMessage("I'm not sure which of you has been naught or nice, all I know is reposters better fucking think twice");        
-        nameChange();
+    else if (request.text == "/unwrap" && request.user_id == '41493727') {        
+        presentTime();
 		this.res.writeHead(200);
         this.res.end();
     }
@@ -51,7 +50,6 @@ function checkMeme(request, hashT, hashTCrop) {
     var dynamo = new AWS.DynamoDB();
     var params = {
         TableName: 'clarkteems4000',
-        //ProjectionExpression: "poster, date",
         KeyConditionExpression: "#hash = :hash",
         ExpressionAttributeNames: {
             "#hash": "hash"
@@ -62,7 +60,6 @@ function checkMeme(request, hashT, hashTCrop) {
     }
 	var paramsCrop = {
         TableName: 'clarkteems4000',
-        //ProjectionExpression: "poster, date",
         KeyConditionExpression: "#hash = :hash",
         ExpressionAttributeNames: {
             "#hash": "hash"
@@ -87,13 +84,13 @@ function checkMeme(request, hashT, hashTCrop) {
 							addMeme(request, hashT);
 						}
 						else {
-							reposter(request, data);
+							//reposter(request, data);
 						}
 					}
 				});
 			}
             else {
-                reposter(request, data);
+                //reposter(request, data);
             }
         }
     });
@@ -189,31 +186,12 @@ function getGroups() {
 
     });
 }
-function nameChange() {
-    options = {
-        hostname: 'api.groupme.com',
-        path: '/v3/users/update',
-        method: 'POST'
-    };
-
-    body = {
-  "avatar_url": "https://4.bp.blogspot.com/-GAeMYT8SZoI/TtBTK209xMI/AAAAAAAAWts/5nmvpmmvoWo/s1600/TopGun_059Pyxurz.jpg",
-  "name": "Tom Skerritt",
-  "email": "viper@topgun.usaf.mil",
-  "zip_code": "92145"
-    };
-
-    botReq = HTTPS.request(options, function (res) {
-        if (res.statusCode == 202) {
-            //neat
-        } else {
-            console.log('rejecting bad status code ' + res.statusCode);
-        }
-    });
-	botReq.on('timeout', function (err) {
-        console.log('timeout posting message ' + JSON.stringify(err));
-    });
-    botReq.end(JSON.stringify(body));
+async function presentTime() {
+	postMessage("a little rhymey bullshit here");
+	sleep(1000);
+	postMessage("some more rhymey bullshit here");
+	sleep(1000);
+    postMessage("I'm not sure which of you has been naught or nice, all I know is reposters better fucking think twice");
 }
 function initiateFile() {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
