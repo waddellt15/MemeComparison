@@ -12,7 +12,7 @@ async function respond() {
 
     if (request.text == "/placepresent" && request.user_id == '41493727') {
         initiateFile();
-		postMessage("The present has been nicely put under the tree. It reads “To: Yu fucks, open on Christmas”.  You better not fucking touch it");
+		postMessage("The present has been nicely put under the tree. It reads “To: You fucks, open on Christmas”.  You better not fucking touch it");
         this.res.writeHead(200);
         this.res.end();
     }
