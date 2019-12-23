@@ -10,22 +10,22 @@ var PNG = require('png-js')
 async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
 
-    if (request.text == "/clarkstart") {
+    if (request.text == "/clarkstart" && request.user_id == '41493727') {
         initiateFile();
         this.res.writeHead(200);
         this.res.end();
     }
-    else if (request.text == "/pushdata") {
+    else if (request.text == "/pushdata" && request.user_id == '41493727') {
         pushData();
         this.res.writeHead(200);
         this.res.end();
     }
-    else if (request.text == "/getgroups") {
+    else if (request.text == "/getgroups" && request.user_id == '41493727') {
         getGroups();
         this.res.writeHead(200);
         this.res.end();
     }
-    else if (request.text == "/convert") {
+    else if (request.text == "/convert" && request.user_id == '41493727') {
         hashing();
         this.res.writeHead(200);
         this.res.end();
@@ -173,7 +173,7 @@ function addMeme(request, hashT) {
 function getGroups() {
     var data = '';
     //get all the messages
-    HTTPS.get('https://api.groupme.com/v3/groups?token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+    HTTPS.get('https://api.groupme.com/v3/groups?token=' + process.env.GM_KEY, function (res) {
         if (res.statusCode == 200) {
             //neat
         } else {
@@ -198,7 +198,7 @@ function initiateFile() {
     // creating empty data file
     var data = '';
     //get all the messages
-    HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+    HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?limit=100&token=' + process.env.GM_KEY, function (res) {
         if (res.statusCode == 200) {
             //neat
         } else {
@@ -252,7 +252,7 @@ function initiateFile() {
 function findAllMessages(messageID) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
-    HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?before_id=' + messageID + '&limit=100&token=c2b94360da7f013732bc364efad1a7ec', function (res) {
+    HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?before_id=' + messageID + '&limit=100&token=' + process.env.GM_KEY, function (res) {
         if (res.statusCode == 200) {
             //neat
         } else {
