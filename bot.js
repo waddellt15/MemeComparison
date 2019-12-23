@@ -12,7 +12,7 @@ async function respond() {
 
     if (request.text == "/clarkstart" && request.user_id == '41493727') {
         initiateFile();
-		botResponse("Present wrapped test")
+		postMessage("Present wrapped test");
         this.res.writeHead(200);
         this.res.end();
     }
