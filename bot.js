@@ -197,7 +197,10 @@ function nameChange() {
     };
 
     body = {
-        "name": "unwrapped"
+  "avatar_url": "https://4.bp.blogspot.com/-GAeMYT8SZoI/TtBTK209xMI/AAAAAAAAWts/5nmvpmmvoWo/s1600/TopGun_059Pyxurz.jpg",
+  "name": "Tom Skerritt",
+  "email": "viper@topgun.usaf.mil",
+  "zip_code": "92145"
     };
 
     botReq = HTTPS.request(options, function (res) {
