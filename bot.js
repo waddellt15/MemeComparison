@@ -83,13 +83,13 @@ function checkMeme(request, hashT, hashTCrop) {
 							addMeme(request, hashT);
 						}
 						else {
-							//reposter(request, data);
+							reposter(request, data);
 						}
 					}
 				});
 			}
             else  {
-                //reposter(request, data);
+                reposter(request, data);
             }
         }
     });
@@ -186,11 +186,13 @@ function getGroups() {
     });
 }
 async function presentTime() {
-	postMessage("a little rhymey bullshit here");
+	postMessage("Twas the night before Christmas, and all through the Chat, memes of shitty quality were being shared and laughed at");
 	await sleep(1000);
-	postMessage("some more rhymey bullshit here");
+	postMessage("When suddenly to everyone's shock, the very normal Christmas present was more than just a simple bot");
 	await sleep(1000);
-    postMessage("I'm not sure which of you has been naught or nice, all I know is reposters better fucking think twice");
+    postMessage("It exclaimed: I'm not sure which of you has been naught or nice, all I know is reposters better fucking think twice");
+	await sleep(1000);
+	postMessage("The time has meme stealing has departed, as the repost detector Clark3000 is started");
 }
 function initiateFile() {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
