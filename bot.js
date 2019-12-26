@@ -343,13 +343,29 @@ function hashingCrop(url) {
                     PNG.decode('reformat.png', function (pixels) {
                         var ui32 = new Uint32Array(pixels.buffer, pixels.byteOffset, pixels.byteLength / Uint32Array.BYTES_PER_ELEMENT);
                         var Hashn = '';
-                        var total = 0;
-                        for (var i = 0; i < ui32.length; i++) {
-                            total += ui32[i]
+                        var total1 = 0;
+						var total2 = 0;
+						//Hashing of first half
+                        for (var i = 0; i < ui32.length/2; i++) {
+                            total1 += ui32[i]
                         }
-                        total = total / (size * size)
-                        for (var i = 0; i < ui32.length; i++) {
-                            if (ui32[i] > total) {
+                        total1 = total1 / (size * size*2)
+                        for (var i = ui32.length/2; i =< ui32.length; i++) {
+                            total2 += ui32[i]
+                        }
+                        total2 = total2 / (size * size*2)	
+
+						//Hashing of second half
+                        for (var i = 0; i < ui32.length/2; i++) {
+                            if (ui32[i] > total1) {
+                                Hashn += '1';
+                            }
+                            else {
+                                Hashn += '0';
+                            }
+                        }
+					    for (var i = ui32.length/2; i =< ui32.length; i++) {
+                            if (ui32[i] > total2) {
                                 Hashn += '1';
                             }
                             else {
@@ -383,13 +399,29 @@ function hashing(url) {
                     PNG.decode('reformat.png', function (pixels) {
                         var ui32 = new Uint32Array(pixels.buffer, pixels.byteOffset, pixels.byteLength / Uint32Array.BYTES_PER_ELEMENT);
                         var Hashn = '';
-                        var total = 0;
-                        for (var i = 0; i < ui32.length; i++) {
-                            total += ui32[i]
+                        var total1 = 0;
+						var total2 = 0;
+						//Hashing of first half
+                        for (var i = 0; i < ui32.length/2; i++) {
+                            total1 += ui32[i]
                         }
-                        total = total / (size * size)
-                        for (var i = 0; i < ui32.length; i++) {
-                            if (ui32[i] > total) {
+                        total1 = total1 / (size * size*2)
+                        for (var i = ui32.length/2; i =< ui32.length; i++) {
+                            total2 += ui32[i]
+                        }
+                        total2 = total2 / (size * size*2)	
+
+						//Hashing of second half
+                        for (var i = 0; i < ui32.length/2; i++) {
+                            if (ui32[i] > total1) {
+                                Hashn += '1';
+                            }
+                            else {
+                                Hashn += '0';
+                            }
+                        }
+					    for (var i = ui32.length/2; i =< ui32.length; i++) {
+                            if (ui32[i] > total2) {
                                 Hashn += '1';
                             }
                             else {
