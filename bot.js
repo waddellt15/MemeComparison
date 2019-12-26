@@ -334,10 +334,10 @@ function hashingCrop(url) {
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
+			    .colorspace('GRAY')
                 .resize(size, size + 2, '!')
                 .crop(size,size,0,0)
                 .noProfile()
-                .colorspace('GRAY')
                 .write('reformat.png', function (err) {
                     if (!err) console.log("hashed");
                     PNG.decode('reformat.png', function (pixels) {
@@ -370,10 +370,10 @@ function hashing(url) {
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
+			    .colorspace('GRAY')
                 .resize(size, size + 1, '!')
                 .crop(size,size,0,0)
                 .noProfile()
-                .colorspace('GRAY')
                 .write('reformat.png', function (err) {
                     if (!err) console.log("hashed");
                     PNG.decode('reformat.png', function (pixels) {
