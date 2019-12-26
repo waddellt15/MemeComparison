@@ -330,12 +330,12 @@ function sleep(ms) {
 }
 function hashingCrop(url) {
     var hashT = '';
-    var size = 9;
+    var size = 8;
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
 			    .colorspace('GRAY')
-                .resize(size, size + 2, '!')
+                .resize(size, size + 1, '!')
                 .crop(size,size,0,0)
                 .noProfile()
                 .write('reformat.png', function (err) {
@@ -370,13 +370,13 @@ function hashingCrop(url) {
 }
 function hashing(url) {
     var hashT = '';
-    var size = 9;
+    var size = 8;
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
 			    .colorspace('GRAY')
-                .resize(size, size + 1, '!')
-                .crop(size,size,0,0)
+                .resize(size, size, '!')
+                //.crop(size,size,0,0)
                 .noProfile()
                 .write('reformat.png', function (err) {
                     if (!err) console.log("hashed");
