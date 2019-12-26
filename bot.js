@@ -405,11 +405,11 @@ function hashing(url) {
                         for (var i = 0; i < ui32.length/2; i++) {
                             total1 += ui32[i]
                         }
-                        total1 = total1 / (size * size*2)
+                        total1 = total1 / (size * size/2)
                         for (var i = ui32.length/2; i <= ui32.length; i++) {
                             total2 += ui32[i]
                         }
-                        total2 = total2 / (size * size*2)	
+                        total2 = total2 / (size * size/2)	
 
 						//Hashing of second half
                         for (var i = 0; i < ui32.length/2; i++) {
