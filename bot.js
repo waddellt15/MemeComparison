@@ -9,9 +9,9 @@ var PNG = require('png-js')
 async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
 
-    if (request.text == "/placepresent" && request.user_id == '41493727') {
+    if (request.text == "/rehashall" && request.user_id == '41493727') {
         initiateFile();
-		postMessage("The present has been nicely put under the tree. It reads “To: You fucks, open on Christmas”.  Sounds like you better not fucking touch it");
+		//postMessage("The present has been nicely put under the tree. It reads “To: You fucks, open on Christmas”.  Sounds like you better not fucking touch it");
         this.res.writeHead(200);
         this.res.end();
     }
