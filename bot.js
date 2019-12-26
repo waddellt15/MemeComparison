@@ -109,7 +109,7 @@ function reposter(request, original) {
 	var timeStamp = new Date(0);
 	timeStamp.setUTCSeconds(time);
 	console.log(timeStamp);
-    botResponse = "REPOST @" + request.name + " , Original post by:" + original.Items[0].poster.S + ", At time: " + timeStamp;
+    botResponse = "REPOST @" + request.name + " , Original post by:" + original.Items[0].poster.S + ", At time: " + timeStamp + " Original Image: " + original.Items[0].Image.S;
 
     body = {
         "bot_id": process.env.botID,
