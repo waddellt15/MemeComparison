@@ -350,7 +350,7 @@ function hashingCrop(url) {
                             total1 += ui32[i]
                         }
                         total1 = total1 / (size * size/2)
-                        for (var i = (ui32.length/2); i <= ui32.length; i++) {
+                        for (var i = (ui32.length/2); i < ui32.length; i++) {
                             total2 += ui32[i]
                         }
                         total2 = total2 / (size * size/2)	
@@ -364,7 +364,7 @@ function hashingCrop(url) {
                                 Hashn += '0';
                             }
                         }
-					    for (var i = (ui32.length/2); i <= ui32.length; i++) {
+					    for (var i = (ui32.length/2); i < ui32.length; i++) {
                             if (ui32[i] > total2) {
                                 Hashn += '1';
                             }
@@ -406,8 +406,9 @@ function hashing(url) {
                             total1 += ui32[i]
                         }
                         total1 = total1 / (size * size/2)
-                        for (var i = (ui32.length/2); i <= ui32.length; i++) {
+                        for (var i = (ui32.length/2); i < ui32.length; i++) {
                             total2 += ui32[i]
+							console.log(total2);
                         }
                         total2 = total2 / (size * size/2)	
 
@@ -421,8 +422,8 @@ function hashing(url) {
                                 Hashn += '0';
                             }
                         }
-					    for (var i = (ui32.length/2); i <= ui32.length; i++) {
-                            console.log(ui32[i]);
+					    for (var i = (ui32.length/2); i < ui32.length; i++) {
+                            //console.log(ui32[i]);
 							if (ui32[i] > total2) {
                                 Hashn += '1';
                             }
