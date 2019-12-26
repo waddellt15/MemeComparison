@@ -334,7 +334,7 @@ function hashingCrop(url) {
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
-                .resize(size, size + 2, '!')
+                .resize(size, size + 3, '!')
                 .crop(size,size,0,0)
 				.colorspace('GRAY')
                 .noProfile()
@@ -390,7 +390,7 @@ function hashing(url) {
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
-                .resize(size, size+1, '!')
+                .resize(size, size+2, '!')
                 .crop(size,size,0,0)
 				.colorspace('GRAY')
                 .noProfile()
