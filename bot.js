@@ -307,7 +307,7 @@ function findAllMessages(messageID) {
                                     console.log("Success", data);
                                 }
                             });
-                            await sleep(200);
+                            await sleep(120);
                             returnCount++;
                             console.log(returnCount);
                         }
