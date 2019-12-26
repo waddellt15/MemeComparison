@@ -412,6 +412,7 @@ function hashing(url) {
                         total2 = total2 / (size * size/2)	
 
 						//Hashing of second half
+						console.log(total2)
                         for (var i = 0; i < ui32.length/2; i++) {
                             if (ui32[i] > total1) {
                                 Hashn += '1';
@@ -421,7 +422,8 @@ function hashing(url) {
                             }
                         }
 					    for (var i = (ui32.length/2); i <= ui32.length; i++) {
-                            if (ui32[i] > total2) {
+                            console.log(ui32[i]);
+							if (ui32[i] > total2) {
                                 Hashn += '1';
                             }
                             else {
