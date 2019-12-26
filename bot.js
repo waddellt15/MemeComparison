@@ -27,7 +27,7 @@ async function respond() {
     }
     else if (Array.isArray(request.attachments) && request.attachments) {
         for (j = 0; j < request.attachments.length; j++) {
-            if (request.attachments[j].type == "image") {
+            if (request.attachments[j].type == "image" && !request.attachments[j].url.includes(".gif")) {
                 var hashT = '';
 				var hashTCrop = '';
                 hashT = await hashing(request.attachments[j].url);
@@ -408,12 +408,10 @@ function hashing(url) {
                         total1 = total1 / (size * size/2)
                         for (var i = (ui32.length/2); i < ui32.length; i++) {
                             total2 += ui32[i]
-							console.log(total2);
                         }
                         total2 = total2 / (size * size/2)	
 
 						//Hashing of second half
-						console.log(total2)
                         for (var i = 0; i < ui32.length/2; i++) {
                             if (ui32[i] > total1) {
                                 Hashn += '1';
