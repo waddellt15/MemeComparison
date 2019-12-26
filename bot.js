@@ -83,13 +83,13 @@ function checkMeme(request, hashT, hashTCrop) {
 							addMeme(request, hashT);
 						}
 						else {
-							reposter(request, data);
+							//reposter(request, data);
 						}
 					}
 				});
 			}
             else  {
-                reposter(request, data);
+                //reposter(request, data);
             }
         }
     });
@@ -356,8 +356,9 @@ function hashingCrop(url) {
                                 Hashn += '0';
                             }
                         }
-                        Hashn = parseInt(Hashn, 2)
-                        console.log("Cropped:");						                        
+						console.log("Cropped:")
+					    console.log(Hashn)
+                        Hashn = parseInt(Hashn, 2)					                        
 					    console.log(Hashn)
                         hashT = Hashn.toString(16)
 						console.log(hashT)
@@ -395,8 +396,9 @@ function hashing(url) {
                                 Hashn += '0';
                             }
                         }
+					    console.log("Normal:")
+                        console.log(Hashn)
                         Hashn = parseInt(Hashn, 2)
-						console.log("Normal:")
                         console.log(Hashn)
                         hashT = Hashn.toString(16)
 						console.log(hashT)
