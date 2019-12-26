@@ -357,7 +357,10 @@ function hashingCrop(url) {
                             }
                         }
                         Hashn = parseInt(Hashn, 2)
+                        console.log("Cropped:");						                        
+					    console.log(Hashn)
                         hashT = Hashn.toString(16)
+						console.log(hashT)
                         resolve(hashT);
                     });
                 });
@@ -393,7 +396,10 @@ function hashing(url) {
                             }
                         }
                         Hashn = parseInt(Hashn, 2)
+						console.log("Normal:")
+                        console.log(Hashn)
                         hashT = Hashn.toString(16)
+						console.log(hashT)
                         resolve(hashT);
                     });
                 });
