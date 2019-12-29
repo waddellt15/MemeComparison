@@ -5,7 +5,7 @@ var returnCount = 0;
 var gm = require('gm').subClass({ imageMagick: true });
 var request = require('request');
 var PNG = require('png-js')
-
+var fCount = 0;
 async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
 
@@ -47,8 +47,7 @@ function checkMeme(request, hashT, hashTCrop) {
     console.log(hashT);
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
-
-	var fCount = 0;
+	fCount = 0;
 	var hashN = parseInt(hashT,16).toString(2)
     for (i = 0; i < hashN.length; i++) {
 		var hashN = parseInt(hashT,16).toString(2)		
