@@ -48,7 +48,7 @@ function checkMeme(request, hashT, hashTCrop) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
     var params = {
-        TableName: 'clarkteems4000',
+        TableName: 'clarkteems3001',
         KeyConditionExpression: "#hash = :hash",
         ExpressionAttributeNames: {
             "#hash": "hash"
@@ -58,7 +58,7 @@ function checkMeme(request, hashT, hashTCrop) {
         }
     }
 	var paramsCrop = {
-        TableName: 'clarkteems4000',
+        TableName: 'clarkteems3001',
         KeyConditionExpression: "#hash = :hash",
         ExpressionAttributeNames: {
             "#hash": "hash"
@@ -146,7 +146,7 @@ function addMeme(request, hashT) {
         fav = '0'
     }
     var params = {
-        TableName: 'clarkteems4000',
+        TableName: 'clarkteems3001',
         Item: {
             'Image': { S: request.attachments[0].url },
             'poster': { S: request.name },
@@ -226,7 +226,7 @@ function initiateFile() {
 					var hashT = '';
                     hashT = await hashing(mess[i].attachments[0].url);
                     var params = {
-                        TableName: 'clarkteems4000',
+                        TableName: 'clarkteems3001',
                         Item: {
                             'Image': { S: mess[i].attachments[0].url },
                             'poster': { S: mess[i].name },
@@ -290,7 +290,7 @@ function findAllMessages(messageID) {
 								hashT = await hashing(mess[i].attachments[0].url);
 							}
                             var params = {
-                                TableName: 'clarkteems4000',
+                                TableName: 'clarkteems3001',
                                 Item: {
                                     'Image': { S: mess[i].attachments[0].url },
                                     'poster': { S: mess[i].name },
@@ -328,6 +328,146 @@ function sleep(ms) {
         }, ms);
     });
 }
+function hashingCrop(url) {
+    var hashT = '';
+    var size = 8;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            gm(request(url))
+                .resize(size+1, size + 2, '!')
+                .crop(size+1,size,0,0)
+				.colorspace('GRAY')
+                .noProfile()
+                .write('reformat.png', function (err) {
+                    if (!err) console.log("hashed");
+                    PNG.decode('reformat.png', function (pixels) {
+                        var ui32 = new Uint32Array(pixels.buffer, pixels.byteOffset, pixels.byteLength / Uint32Array.BYTES_PER_ELEMENT);
+                        var Hashn = '';
+						//Hashing of first half
+                        for (var i = 0; i < ui32.length; i++) {
+                            if (i%8 != 0) {
+								if(ui32[i] < ui32[i+1]){
+									Hashn += '1';
+								}
+								else{
+									Hashn += '0';
+								}
+							}
+                        }
+						console.log("Cropped:")
+					    console.log(Hashn)
+                        Hashn = parseInt(Hashn, 2)					                        
+					    console.log(Hashn)
+                        hashT = Hashn.toString(16)
+						console.log(hashT)
+                        resolve(hashT);
+                    });
+                });
+        }, 200);
+    });
+}
+function hashing(url) {
+    var hashT = '';
+    var size = 8;
+    return new Promise(resolve => {
+        setTimeout(() => {
+            gm(request(url))
+				.colorspace('GRAY')
+                .resize(size+1, size, '!')
+                //.crop(size,size,0,0)
+                .noProfile()
+                .write('reformat.png', function (err) {
+                    if (!err) console.log("hashed");
+                    PNG.decode('reformat.png', function (pixels) {
+                        var ui32 = new Uint32Array(pixels.buffer, pixels.byteOffset, pixels.byteLength / Uint32Array.BYTES_PER_ELEMENT);
+                        var Hashn = '';
+						//Hashing of first half
+                        for (var i = 0; i < ui32.length; i++) {
+                            if (i%8 != 0) {
+								if(ui32[i] < ui32[i+1]){
+									Hashn += '1';
+								}
+								else{
+									Hashn += '0';
+								}
+							}
+                        }
+					    console.log("Normal:")
+                        console.log(Hashn)
+                        Hashn = parseInt(Hashn, 2)
+                        console.log(Hashn)
+                        hashT = Hashn.toString(16)
+						console.log(hashT)
+                        resolve(hashT);
+                    });
+                });
+        }, 200);
+    });
+}
+function uploadfile() {
+    AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
+    var s3 = new AWS.S3();
+    fs.readFile('reformat.png', function (err, data) {
+        if (err) { throw err; }
+
+        var base64data = new Buffer(data, 'binary');
+        s3.putObject({
+            Bucket: process.env.S3_BUCKET_NAME,
+            Key: 'reformat.png',
+            Body: base64data,
+            ACL: 'public-read'
+        }, function (resp) {
+                console.log(arguments);
+                fs.unlink('reformat.png', function (err, data) {
+                    if (err) {
+                        console.log("Error", err);
+                    } else {
+                        console.log("Deleted");
+                    }
+                });
+            console.log('Successfully uploaded package.');
+        });
+    });
+}
+function postMessage(botResponse) {
+    var botResponse, options, body, botReq;
+
+
+    options = {
+        hostname: 'api.groupme.com',
+        path: '/v3/bots/post',
+        method: 'POST'
+    };
+
+    body = {
+        "bot_id": process.env.botID,
+        "text": botResponse
+    };
+
+    console.log('sending ' + botResponse + ' to ' + process.env.botID);
+
+    botReq = HTTPS.request(options, function (res) {
+        if (res.statusCode == 202) {
+            //neat
+        } else {
+            console.log('rejecting bad status code ' + res.statusCode);
+        }
+    });
+
+    botReq.on('error', function (err) {
+        console.log('error posting message ' + JSON.stringify(err));
+    });
+    botReq.on('timeout', function (err) {
+        console.log('timeout posting message ' + JSON.stringify(err));
+    });
+    botReq.end(JSON.stringify(body));
+}
+
+
+exports.respond = respond;
+
+/**
+*Old hashing methods used a custom type of aHash
 function hashingCrop(url) {
     var hashT = '';
     var size = 8;
@@ -441,64 +581,4 @@ function hashing(url) {
         }, 200);
     });
 }
-function uploadfile() {
-    AWS.config.update({ accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
-    var s3 = new AWS.S3();
-    fs.readFile('reformat.png', function (err, data) {
-        if (err) { throw err; }
-
-        var base64data = new Buffer(data, 'binary');
-        s3.putObject({
-            Bucket: process.env.S3_BUCKET_NAME,
-            Key: 'reformat.png',
-            Body: base64data,
-            ACL: 'public-read'
-        }, function (resp) {
-                console.log(arguments);
-                fs.unlink('reformat.png', function (err, data) {
-                    if (err) {
-                        console.log("Error", err);
-                    } else {
-                        console.log("Deleted");
-                    }
-                });
-            console.log('Successfully uploaded package.');
-        });
-    });
-}
-function postMessage(botResponse) {
-    var botResponse, options, body, botReq;
-
-
-    options = {
-        hostname: 'api.groupme.com',
-        path: '/v3/bots/post',
-        method: 'POST'
-    };
-
-    body = {
-        "bot_id": process.env.botID,
-        "text": botResponse
-    };
-
-    console.log('sending ' + botResponse + ' to ' + process.env.botID);
-
-    botReq = HTTPS.request(options, function (res) {
-        if (res.statusCode == 202) {
-            //neat
-        } else {
-            console.log('rejecting bad status code ' + res.statusCode);
-        }
-    });
-
-    botReq.on('error', function (err) {
-        console.log('error posting message ' + JSON.stringify(err));
-    });
-    botReq.on('timeout', function (err) {
-        console.log('timeout posting message ' + JSON.stringify(err));
-    });
-    botReq.end(JSON.stringify(body));
-}
-
-
-exports.respond = respond;
+**/
