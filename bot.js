@@ -47,16 +47,6 @@ function checkMeme(request, hashT, hashTCrop) {
     console.log(hashT);
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
-    var params = {
-        TableName: 'clarkteems3001',
-        KeyConditionExpression: "#hash = :hash",
-        ExpressionAttributeNames: {
-            "#hash": "hash"
-        },
-        ExpressionAttributeValues: {
-            ':hash': { S: hashT.toString() } 
-        }
-    }
 
 	var fCount = 0;
 	var hashN = parseInt(hashT,16).toString(2)
@@ -90,13 +80,23 @@ function checkMeme(request, hashT, hashTCrop) {
 				//addMeme(request, hashT);
 			}
 			else {
-				//reposter(request, data);
 				fCount++;
+				//reposter(request, data);
+				break;
 			}
 		}
 		});
 	}
-	console.log(fCount);
+    var params = {
+        TableName: 'clarkteems3001',
+        KeyConditionExpression: "#hash = :hash",
+        ExpressionAttributeNames: {
+            "#hash": "hash"
+        },
+        ExpressionAttributeValues: {
+            ':hash': { S: hashT.toString() } 
+        }
+    }		
 	var paramsCrop = {
         TableName: 'clarkteems3001',
         KeyConditionExpression: "#hash = :hash",
@@ -107,7 +107,8 @@ function checkMeme(request, hashT, hashTCrop) {
             ':hash': { S: hashTCrop.toString() } 
         }
     }
-    console.log(request);
+    console.log(request); 
+	if(fCount == 0) {
     dynamo.query(params, function (err, data) {
         if (err) {
             console.log("Error", err);
@@ -133,7 +134,7 @@ function checkMeme(request, hashT, hashTCrop) {
             }
         }
     });
-
+	}
 }
 function reposter(request, original) {
     var botResponse, options, body, botReq;
