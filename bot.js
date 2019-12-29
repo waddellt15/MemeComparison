@@ -374,6 +374,7 @@ function hashing(url) {
             gm(request(url))
 			    .noProfile()
 				.colorspace('GRAY')
+				.filter(hamming)
                 .resize(size+1, size, '!')
                 //.crop(size,size,0,0)
                 .write('reformat.png', function (err) {
