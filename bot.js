@@ -75,7 +75,6 @@ function checkMeme(request, hashT, hashTCrop) {
             console.log("Error", err);
         } 
 		else {
-			console.log(data.Count);
 			if (data.Count == 0) {				
 				//addMeme(request, hashT);
 			}
@@ -89,6 +88,8 @@ function checkMeme(request, hashT, hashTCrop) {
 		break;
 		}
 	}
+	console.log("Hamming Count");
+	console.log(fCount);
     var params = {
         TableName: 'clarkteems3001',
         KeyConditionExpression: "#hash = :hash",
