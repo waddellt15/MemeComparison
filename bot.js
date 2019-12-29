@@ -373,7 +373,7 @@ function hashing(url) {
         setTimeout(() => {
             gm(request(url))
 			    .noProfile()
-				.sharpen(.25, 3)
+				.sharpen(3, 3)
 				.colorspace('Rec709Luma')
 				.filter('Mitchell')
                 .resize(size+1, size, '!')
