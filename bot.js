@@ -375,8 +375,9 @@ function hashing(url) {
 			    .noProfile()
 				.colorspace('Rec709Luma')
 				.filter('Cubic') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad.
-				.unsharp(0, 4,3)
-                .resize(size+1, size, '!')
+				//.unsharp(0, 4,3)
+                .contrast(-3)
+				.resize(size+1, size, '!')
                 //.crop(size,size,0,0)
                 .write('reformat.png', function (err) {
                     if (!err) console.log("hashed");
