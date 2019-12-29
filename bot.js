@@ -69,7 +69,7 @@ async function checkMeme(request, hashT, hashTCrop) {
             ':hash': { S: hashN.toString() } 
         }
 		}
-		dynamo.query(params, function (err, data) {
+		retVal = await dynamo.query(params, function (err, data) {
         if (err) {
             console.log("Error", err);
         } 
@@ -87,7 +87,7 @@ async function checkMeme(request, hashT, hashTCrop) {
 		if(fCount > 0) {
 		break;
 		}
-		await sleep(120);
+		//await sleep(120);
 	}
 	console.log("Hamming Count");
 	console.log(fCount);
