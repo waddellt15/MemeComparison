@@ -372,6 +372,7 @@ function hashing(url) {
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
+				.autoOrient()
 			    .noProfile()
 				.colorspace('Rec709Luma')
 				.filter('Sinc')
