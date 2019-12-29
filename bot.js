@@ -324,7 +324,8 @@ function findAllMessages(messageID) {
                 if (mess[i].attachments.length) {
                     for (j = 0; j < mess[i].attachments.length; j++) {
                         if (mess[i].attachments[j].type == "image" && !mess[i].attachments[j].url.includes(".gif")) {
-                            var fav = '';
+                         try{   
+							var fav = '';
 							var hashT = '';
                             if (mess[i].favorited_by) {
                                 fav = mess[i].favorited_by.length.toString()
@@ -356,6 +357,9 @@ function findAllMessages(messageID) {
                             returnCount++;
                             console.log(returnCount);
                         }
+						catch(err){
+						}
+						}
                     }
                 }
             }
