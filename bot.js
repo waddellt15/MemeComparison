@@ -83,13 +83,13 @@ function checkMeme(request, hashT, hashTCrop) {
 							addMeme(request, hashT);
 						}
 						else {
-							reposter(request, data);
+							//reposter(request, data);
 						}
 					}
 				});
 			}
             else  {
-                reposter(request, data);
+                //reposter(request, data);
             }
         }
     });
@@ -372,10 +372,10 @@ function hashing(url) {
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
+			    .noProfile()
 				.colorspace('GRAY')
                 .resize(size+1, size, '!')
                 //.crop(size,size,0,0)
-                .noProfile()
                 .write('reformat.png', function (err) {
                     if (!err) console.log("hashed");
                     PNG.decode('reformat.png', function (pixels) {
