@@ -374,7 +374,7 @@ function hashing(url) {
             gm(request(url))
 			    .noProfile()
 				.colorspace('Rec709Luma')
-				.filter('Sinc')
+				.filter('Catrom')
 				//.unsharp(0, 4,3)
                 .resize(size+1, size, '!')
                 //.crop(size,size,0,0)
