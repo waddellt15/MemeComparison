@@ -360,7 +360,7 @@ function hashingCrop(url) {
                         Hashn = parseInt(Hashn, 2)					                        
 					    console.log(Hashn)
                         hashT = Hashn.toString(16)
-						console.log(hashT.toString(2))
+						console.log(hashT)
                         resolve(hashT);
                     });
                 });
@@ -400,7 +400,7 @@ function hashing(url) {
                         Hashn = parseInt(Hashn, 2)
                         console.log(Hashn)
                         hashT = Hashn.toString(16)
-						console.log(hashT)
+						console.log(parseInt(hashT,16).toString(2))
                         resolve(hashT);
                     });
                 });
