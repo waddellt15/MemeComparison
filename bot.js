@@ -49,7 +49,7 @@ async function checkMeme(request, hashT, hashTCrop) {
     var dynamo = new AWS.DynamoDB();
 	fCount = 0;
 	var hashN = parseInt(hashT,16).toString(2)
-    for (i = 0; i < 0; i++) {
+    for (i = 0; i < hashN.length; i++) {
 		var hashN = parseInt(hashT,16).toString(2)		
 		if (hashN.charAt(i) == '1'){
 			hashN = hashN.substr(0,i) + '0' + hashN.substr(i+1,hashN.length)
@@ -334,7 +334,7 @@ function findAllMessages(messageID) {
 							if (mess[i].attachments[j].url){
 								hashT = await hashing(mess[i].attachments[j].url);
 							}
-                            var params = {
+                            var paramsInsert = {
                                 TableName: 'clarkteems3001',
                                 Item: {
                                     'Image': { S: mess[i].attachments[j].url },
@@ -345,7 +345,7 @@ function findAllMessages(messageID) {
 
                                 }
                             }
-                            dynamo.putItem(params, function (err, data) {
+                            dynamo.putItem(paramsInsert, function (err, data) {
                                 if (err) {
                                     console.log("Error", err);
                                 } else {
