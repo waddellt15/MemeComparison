@@ -331,8 +331,8 @@ function findAllMessages(messageID) {
                             } else {
                                 fav = '0'
                             }
-							if (mess[i].attachments[0].url){
-								hashT = await hashing(mess[i].attachments[0].url);
+							if (mess[i].attachments[j].url){
+								hashT = await hashing(mess[i].attachments[j].url);
 							}
                             var params = {
                                 TableName: 'clarkteems3001',
