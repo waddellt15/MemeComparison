@@ -374,7 +374,7 @@ function hashing(url) {
             gm(request(url))
 			    .noProfile()
 				.colorspace('Rec709Luma')
-				.filter('Mitchell')
+				.filter('Box')
 				.unsharp(0, 5,2)
                 .resize(size+1, size, '!')
                 //.crop(size,size,0,0)
