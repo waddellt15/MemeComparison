@@ -330,11 +330,11 @@ function sleep(ms) {
 }
 function hashingCrop(url) {
     var hashT = '';
-    var size = 8;
+    var size = 6;
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
-                .resize(size+1, size + 2, '!')
+                .resize(size+1, size + 1, '!')
                 .crop(size+1,size,0,0)
 				.colorspace('GRAY')
                 .noProfile()
@@ -368,7 +368,7 @@ function hashingCrop(url) {
 }
 function hashing(url) {
     var hashT = '';
-    var size = 8;
+    var size = 6;
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
