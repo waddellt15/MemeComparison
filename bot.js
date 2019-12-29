@@ -43,7 +43,7 @@ async function respond() {
         this.res.end();
     }
 }
-function checkMeme(request, hashT, hashTCrop) {
+async function checkMeme(request, hashT, hashTCrop) {
     console.log(hashT);
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
@@ -87,6 +87,7 @@ function checkMeme(request, hashT, hashTCrop) {
 		if(fCount > 0) {
 		break;
 		}
+		await sleep(120);
 	}
 	console.log("Hamming Count");
 	console.log(fCount);
