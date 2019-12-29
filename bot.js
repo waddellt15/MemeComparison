@@ -374,10 +374,10 @@ function hashing(url) {
             gm(request(url))
 				.autoOrient()
 			    .noProfile()
-				.contrast(+2)
+				.contrast(-4)
 				.colorspace('Rec709Luma')
 				.filter('Sinc')
-				.unsharp(0, 5,2)
+				.unsharp(0, 7,3)
                 .resize(size+1, size, '!')
                 //.crop(size,size,0,0)
                 .write('reformat.png', function (err) {
