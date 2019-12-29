@@ -374,7 +374,7 @@ function hashing(url) {
             gm(request(url))
 			    .noProfile()
 				.colorspace('Rec709Luma')
-				.filter('Mitchell') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. 
+				.filter('Cubic') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad.
 				//.unsharp(0, 4,3)
                 .resize(size+1, size, '!')
                 //.crop(size,size,0,0)
