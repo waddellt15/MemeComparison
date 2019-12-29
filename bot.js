@@ -373,9 +373,9 @@ function hashing(url) {
         setTimeout(() => {
             gm(request(url))
 			    .noProfile()
-				.unsharp(0, 5,2)
 				.colorspace('Rec709Luma')
 				.filter('Mitchell')
+				.unsharp(0, 5,2)
                 .resize(size+1, size, '!')
                 //.crop(size,size,0,0)
                 .write('reformat.png', function (err) {
