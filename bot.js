@@ -49,7 +49,7 @@ async function checkMeme(request, hashT, hashTCrop) {
     var dynamo = new AWS.DynamoDB();
 	fCount = 0;
 	var hashN = parseInt(hashT,16).toString(2)
-    for (i = 0; i < hashN.length; i++) {
+    for (i = 0; i < 0; i++) {
 		var hashN = parseInt(hashT,16).toString(2)		
 		if (hashN.charAt(i) == '1'){
 			hashN = hashN.substr(0,i) + '0' + hashN.substr(i+1,hashN.length)
