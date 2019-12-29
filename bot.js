@@ -67,6 +67,7 @@ function checkMeme(request, hashT, hashTCrop) {
             ':hash': { S: hashTCrop.toString() } 
         }
     }
+	
     console.log(request);
     dynamo.query(params, function (err, data) {
         if (err) {
@@ -359,7 +360,7 @@ function hashingCrop(url) {
                         Hashn = parseInt(Hashn, 2)					                        
 					    console.log(Hashn)
                         hashT = Hashn.toString(16)
-						console.log(hashT)
+						console.log(hashT.toString(2))
                         resolve(hashT);
                     });
                 });
