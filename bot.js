@@ -374,9 +374,8 @@ function hashing(url) {
             gm(request(url))
 			    .noProfile()
 				.colorspace('Rec709Luma')
-				.filter('Cubic') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad.
+				.filter('Quadratic') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad. Cubic is amazing.
 				//.unsharp(0, 4,3)
-                .contrast(+1)
 				.resize(size+1, size, '!')
                 //.crop(size,size,0,0)
                 .write('reformat.png', function (err) {
