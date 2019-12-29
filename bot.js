@@ -80,6 +80,7 @@ function checkMeme(request, hashT, hashTCrop) {
 			}
 			else {
 				fCount++;
+				console.log("CAUGHT")
 				//reposter(request, data);
 			}
 		}
