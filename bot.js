@@ -87,7 +87,7 @@ function checkMeme(request, hashT, hashTCrop) {
 		else {
 			console.log(data.Count);
 			if (data.Count == 0) {				
-				addMeme(request, hashT);
+				//addMeme(request, hashT);
 			}
 			else {
 				//reposter(request, data);
