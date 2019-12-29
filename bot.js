@@ -57,16 +57,7 @@ function checkMeme(request, hashT, hashTCrop) {
             ':hash': { S: hashT.toString() } 
         }
     }
-	var paramsCrop = {
-        TableName: 'clarkteems3001',
-        KeyConditionExpression: "#hash = :hash",
-        ExpressionAttributeNames: {
-            "#hash": "hash"
-        },
-        ExpressionAttributeValues: {
-            ':hash': { S: hashTCrop.toString() } 
-        }
-    }
+
 	var fCount = 0;
 	var hashN = parseInt(hashT,16).toString(2)
     for (i = 0; i < hashN.length; i++) {
@@ -77,8 +68,42 @@ function checkMeme(request, hashT, hashTCrop) {
 		else {
 		    hashN = hashN.substr(0,i) + '1' + hashN.substr(i+1,hashN.length)
 		}
-		console.log(hashN)
-	}
+		//console.log(hashN)
+		hashN = parseInt(hashN,2).toString(16)
+		var params = {
+        TableName: 'clarkteems3001',
+        KeyConditionExpression: "#hash = :hash",
+        ExpressionAttributeNames: {
+            "#hash": "hash"
+        },
+        ExpressionAttributeValues: {
+            ':hash': { S: hashN.toString() } 
+        }
+		dynamo.query(params, function (err, data) {
+        if (err) {
+            console.log("Error", err);
+        } else {
+			console.log(data.Count);
+			if (data.Count == 0) {				
+				addMeme(request, hashT);
+			}
+			else {
+				//reposter(request, data);
+				fCount++;
+			}
+			}
+		});
+	console.log(fCount);
+	var paramsCrop = {
+        TableName: 'clarkteems3001',
+        KeyConditionExpression: "#hash = :hash",
+        ExpressionAttributeNames: {
+            "#hash": "hash"
+        },
+        ExpressionAttributeValues: {
+            ':hash': { S: hashTCrop.toString() } 
+        }
+    }
     console.log(request);
     dynamo.query(params, function (err, data) {
         if (err) {
