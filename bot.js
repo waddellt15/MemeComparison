@@ -83,7 +83,8 @@ function checkMeme(request, hashT, hashTCrop) {
 		dynamo.query(params, function (err, data) {
         if (err) {
             console.log("Error", err);
-        } else {
+        } 
+		else {
 			console.log(data.Count);
 			if (data.Count == 0) {				
 				addMeme(request, hashT);
@@ -92,8 +93,9 @@ function checkMeme(request, hashT, hashTCrop) {
 				//reposter(request, data);
 				fCount++;
 			}
-			}
+		}
 		});
+	}
 	console.log(fCount);
 	var paramsCrop = {
         TableName: 'clarkteems3001',
