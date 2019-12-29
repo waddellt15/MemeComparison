@@ -67,7 +67,18 @@ function checkMeme(request, hashT, hashTCrop) {
             ':hash': { S: hashTCrop.toString() } 
         }
     }
-	
+	var fCount = 0;
+	var hashN = parseInt(hashT,16).toString(2)
+    for (i = 0; i < hashN.length; i++) {
+		var hashN = parseInt(hashT,16).toString(2)		
+		if (hashN.charAt(i) == '1'){
+			hashN = hashN.substr(0,i) + '0' + hashN.substr(i+1,hashN.length)
+		}
+		else {
+		    hashN = hashN.substr(0,i) + '1' + hashN.substr(i+1,hashN.length)
+		}
+		console.log(hashN)
+	}
     console.log(request);
     dynamo.query(params, function (err, data) {
         if (err) {
@@ -400,7 +411,7 @@ function hashing(url) {
                         Hashn = parseInt(Hashn, 2)
                         console.log(Hashn)
                         hashT = Hashn.toString(16)
-						console.log(parseInt(hashT,16).toString(2))
+						console.log(hashT )
                         resolve(hashT);
                     });
                 });
