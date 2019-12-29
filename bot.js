@@ -330,7 +330,7 @@ function sleep(ms) {
 }
 function hashingCrop(url) {
     var hashT = '';
-    var size = 6;
+    var size = 7;
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
@@ -368,12 +368,12 @@ function hashingCrop(url) {
 }
 function hashing(url) {
     var hashT = '';
-    var size = 6;
+    var size = 7;
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
 			    .noProfile()
-				.sharpen(7, 3)
+				.unsharp(0, 5,2)
 				.colorspace('Rec709Luma')
 				.filter('Mitchell')
                 .resize(size+1, size, '!')
