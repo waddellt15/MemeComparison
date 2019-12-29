@@ -79,6 +79,7 @@ function checkMeme(request, hashT, hashTCrop) {
         ExpressionAttributeValues: {
             ':hash': { S: hashN.toString() } 
         }
+		}
 		dynamo.query(params, function (err, data) {
         if (err) {
             console.log("Error", err);
