@@ -278,7 +278,7 @@ function findAllMessages(messageID) {
                 console.log(mess[i].id);
                 if (mess[i].attachments.length) {
                     for (j = 0; j < mess[i].attachments.length; j++) {
-                        if (mess[i].attachments[j].type == "image") {
+                        if (mess[i].attachments[j].type == "image" && !request.attachments[j].url.includes(".gif")) {
                             var fav = '';
 							var hashT = '';
                             if (mess[i].favorited_by) {
@@ -374,6 +374,7 @@ function hashing(url) {
             gm(request(url))
 				.autoOrient()
 			    .noProfile()
+				.contrast(-2)
 				.colorspace('Rec709Luma')
 				.filter('Sinc')
 				.unsharp(0, 5,2)
