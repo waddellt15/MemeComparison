@@ -82,10 +82,12 @@ function checkMeme(request, hashT, hashTCrop) {
 			else {
 				fCount++;
 				//reposter(request, data);
-				break;
 			}
 		}
 		});
+		if(fCount > 0) {
+		break;
+		}
 	}
     var params = {
         TableName: 'clarkteems3001',
