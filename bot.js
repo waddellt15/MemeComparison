@@ -334,8 +334,8 @@ function hashingCrop(url) {
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
-                .resize(size+1, size + 1, '!')
-                .crop(size+1,size,0,0)
+                .resize(size+1, size, '!')
+                //.crop(size+1,size,0,0)
 				.colorspace('GRAY')
                 .noProfile()
                 .write('reformat.png', function (err) {
@@ -373,8 +373,9 @@ function hashing(url) {
         setTimeout(() => {
             gm(request(url))
 			    .noProfile()
+				.sharpen(.25, 3)
 				.colorspace('Rec709Luma')
-				.filter('Hamming')
+				.filter('Mitchell')
                 .resize(size+1, size, '!')
                 //.crop(size,size,0,0)
                 .write('reformat.png', function (err) {
