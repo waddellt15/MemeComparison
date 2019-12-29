@@ -376,7 +376,7 @@ function hashing(url) {
 				.blur(7,3)
 			    .noProfile()
 				.colorspace('Rec709Luma')
-				.filter('Sinc')
+				.filter('Gaussian')
 				.unsharp(0, 5,2)
                 .resize(size+1, size, '!')
                 //.crop(size,size,0,0)
