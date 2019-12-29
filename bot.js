@@ -374,7 +374,6 @@ function hashing(url) {
             gm(request(url))
 				.autoOrient()
 			    .noProfile()
-				.contrast(-4)
 				.colorspace('Rec709Luma')
 				.filter('Sinc')
 				.unsharp(0, 7,3)
