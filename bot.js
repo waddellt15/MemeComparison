@@ -373,7 +373,7 @@ function hashing(url) {
         setTimeout(() => {
             gm(request(url))
 			    .noProfile()
-				.colorspace('GRAY')
+				.colorspace('Rec709Luma')
 				.filter('Hamming')
                 .resize(size+1, size, '!')
                 //.crop(size,size,0,0)
