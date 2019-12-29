@@ -337,7 +337,7 @@ function findAllMessages(messageID) {
                             var params = {
                                 TableName: 'clarkteems3001',
                                 Item: {
-                                    'Image': { S: mess[i].attachments[0].url },
+                                    'Image': { S: mess[i].attachments[j].url },
                                     'poster': { S: mess[i].name },
                                     'date': { N: mess[i].created_at.toString() },
                                     'hash': { S: hashT.toString() },
