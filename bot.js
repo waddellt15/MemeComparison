@@ -59,7 +59,7 @@ async function checkMeme(request, hashT, hashTCrop) {
 		}
 		//console.log(hashN)
 		hashN = parseInt(hashN,2).toString(16)
-		var params = {
+		var params2 = {
         TableName: 'clarkteems3001',
         KeyConditionExpression: "#hash = :hash",
         ExpressionAttributeNames: {
@@ -69,7 +69,7 @@ async function checkMeme(request, hashT, hashTCrop) {
             ':hash': { S: hashN.toString() } 
         }
 		}
-		retVal = await dynamo.query(params, function (err, data) {
+		retVal = dynamo.query(params2, function (err, data) {
         if (err) {
             console.log("Error", err);
         } 
