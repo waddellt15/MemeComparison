@@ -373,6 +373,7 @@ function hashing(url) {
         setTimeout(() => {
             gm(request(url))
 				.autoOrient()
+				.blur(7,3)
 			    .noProfile()
 				.colorspace('Rec709Luma')
 				.filter('Sinc')
