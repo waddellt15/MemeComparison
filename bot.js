@@ -90,7 +90,7 @@ async function checkMeme(request, hashT, hashTCrop) {
 		if(fCount > 0) {
 		break;
 		}
-		//await sleep(200);
+		await sleep(200);
 	}
 	console.log("Hamming Count");
 	console.log(fCount);
