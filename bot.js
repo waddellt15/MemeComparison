@@ -8,7 +8,7 @@ var PNG = require('png-js')
 var fCount = 0;
 async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
-
+    console.log("STILL FUCKIN UP);
     if (request.text == "/rehashall" && request.user_id == '41493727') {
         initiateFile();
 		//postMessage("The present has been nicely put under the tree. It reads “To: You fucks, open on Christmas”.  Sounds like you better not fucking touch it");
@@ -25,7 +25,7 @@ async function respond() {
         this.res.writeHead(200);
         this.res.end();
     }
-    else if (Array.isArray(request.attachments) && request.attachments) {
+    else if (Array.isArray(request.attachments) && request.attachments && request.attachments.length != 0) {
 		console.log(request.attachments.length + " HERE");
         for (j = 0; j < request.attachments.length; j++) {
 		console.log(j + " TET");
