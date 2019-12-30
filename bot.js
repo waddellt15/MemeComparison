@@ -75,12 +75,11 @@ async function checkMeme(request, hashT, hashTCrop) {
         } 
 		else {
 			if (data.Count == 0) {				
-				//addMeme(request, hashT);
+				//console.log("nothing")
 			}
 			else {
 				fCount++;
 				console.log("CAUGHT")
-				//reposter(request, data);
 			}
 		}
 		});
