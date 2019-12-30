@@ -79,14 +79,15 @@ async function checkMeme(request, hashT, hashTCrop) {
 			}
 			else {
 				fCount++;
+				reposter(request, data);
 				console.log("CAUGHT")
 			}
 		}
 		});
+		await sleep(200);
 		if(fCount > 0) {
 		break;
 		}
-		await sleep(200);
 	}
 	console.log("Hamming Count");
 	console.log(fCount);
@@ -138,9 +139,6 @@ async function checkMeme(request, hashT, hashTCrop) {
         }
     });
 	return Promise.resolve(1);
-	}
-	else {
-		reposter(request, data);
 	}
 }
 function reposter(request, original) {
