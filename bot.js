@@ -75,12 +75,12 @@ async function checkMeme(request, hashT, hashTCrop) {
         } 
 		else {
 			if (data.Count == 0) {				
-				//addMeme(request, hashT);
+				addMeme(request, hashT);
 			}
 			else {
 				fCount++;
 				console.log("CAUGHT")
-				//reposter(request, data);
+				reposter(request, data);
 			}
 		}
 		});
@@ -128,13 +128,13 @@ async function checkMeme(request, hashT, hashTCrop) {
 							addMeme(request, hashT);
 						}
 						else {
-							//reposter(request, data);
+							reposter(request, data);
 						}
 					}
 				});
 			}
             else  {
-                //reposter(request, data);
+                reposter(request, data);
             }
         }
     });
