@@ -8,7 +8,6 @@ var PNG = require('png-js')
 var fCount = 0;
 async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
-    console.log("STILL FUCKIN UP");
     if (request.text == "/rehashall" && request.user_id == '41493727') {
         initiateFile();
 		//postMessage("The present has been nicely put under the tree. It reads “To: You fucks, open on Christmas”.  Sounds like you better not fucking touch it");
@@ -26,16 +25,13 @@ async function respond() {
         this.res.end();
     }
     else if (Array.isArray(request.attachments) && request.attachments && request.attachments.length != 0) {
-		console.log(request.attachments.length + " HERE");
         for (j = 0; j < request.attachments.length; j++) {
-		console.log(j + " TET");
             if (request.attachments[j].type == "image" && !request.attachments[j].url.includes(".gif")) {
                 var hashT = '';
 				var hashTCrop = '';
 				var retVal = '';
                 hashT = await hashing(request.attachments[j].url);
 				hashTCrop = await hashingCrop(request.attachments[j].url);
-				console.log(j + " TESTING");
                 retVal = await checkMeme(request, hashT, hashTCrop);
             }
         }
@@ -94,7 +90,7 @@ async function checkMeme(request, hashT, hashTCrop) {
 		if(fCount > 0) {
 		break;
 		}
-		await sleep(200);
+		//await sleep(200);
 	}
 	console.log("Hamming Count");
 	console.log(fCount);
