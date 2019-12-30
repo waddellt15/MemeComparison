@@ -75,7 +75,7 @@ async function checkMeme(request, hashT, hashTCrop) {
         } 
 		else {
 			if (data.Count == 0) {				
-				addMeme(request, hashT);
+				//addMeme(request, hashT);
 			}
 			else {
 				fCount++;
