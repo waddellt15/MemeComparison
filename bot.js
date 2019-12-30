@@ -8,7 +8,7 @@ var PNG = require('png-js')
 var fCount = 0;
 async function respond() {
     var request = JSON.parse(this.req.chunks[0]);
-    console.log("STILL FUCKIN UP);
+    console.log("STILL FUCKIN UP");
     if (request.text == "/rehashall" && request.user_id == '41493727') {
         initiateFile();
 		//postMessage("The present has been nicely put under the tree. It reads “To: You fucks, open on Christmas”.  Sounds like you better not fucking touch it");
