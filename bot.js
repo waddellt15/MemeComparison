@@ -33,7 +33,7 @@ async function respond() {
                 hashT = await hashing(request.attachments[j].url);
 				hashTCrop = await hashingCrop(request.attachments[j].url);
 				console.log(j + "TESTING");
-                checkMeme(request, hashT, hashTCrop);
+                await checkMeme(request, hashT, hashTCrop);
 				await sleep(1000);
             }
         }
@@ -139,6 +139,7 @@ async function checkMeme(request, hashT, hashTCrop) {
             }
         }
     });
+	return Promise.resolve(1);
 	}
 }
 function reposter(request, original) {
