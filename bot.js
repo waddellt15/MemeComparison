@@ -139,6 +139,9 @@ async function checkMeme(request, hashT, hashTCrop) {
     });
 	return Promise.resolve(1);
 	}
+	else {
+		reposter(request, data);
+	}
 }
 function reposter(request, original) {
     var botResponse, options, body, botReq;
