@@ -26,15 +26,17 @@ async function respond() {
         this.res.end();
     }
     else if (Array.isArray(request.attachments) && request.attachments) {
+		console.log(request.attachments.length + " HERE");
         for (j = 0; j < request.attachments.length; j++) {
+		console.log(j + " TET");
             if (request.attachments[j].type == "image" && !request.attachments[j].url.includes(".gif")) {
                 var hashT = '';
 				var hashTCrop = '';
+				var retVal = '';
                 hashT = await hashing(request.attachments[j].url);
 				hashTCrop = await hashingCrop(request.attachments[j].url);
-				console.log(j + "TESTING");
-                await checkMeme(request, hashT, hashTCrop);
-				await sleep(1000);
+				console.log(j + " TESTING");
+                retVal = await checkMeme(request, hashT, hashTCrop);
             }
         }
 
