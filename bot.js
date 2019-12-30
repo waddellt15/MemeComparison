@@ -127,13 +127,13 @@ async function checkMeme(request, hashT, hashTCrop) {
 							addMeme(request, hashT);
 						}
 						else {
-							reposter(request, data);
+							//reposter(request, data);
 						}
 					}
 				});
 			}
             else  {
-                reposter(request, data);
+                //reposter(request, data);
             }
         }
     });
