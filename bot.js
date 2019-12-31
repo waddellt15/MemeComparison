@@ -420,13 +420,13 @@ function hashingCrop(url) {
 }
 function hashing(url) {
     var hashT = '';
-    var size = 7;
+    var size = 8;
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
 			    .noProfile()
 				.colorspace('Rec709Luma')
-				.filter('Cubic') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad. Cubic is amazing. Quadradtic no
+				.filter('Catrom') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad. Cubic is amazing. Quadradtic no
 				//.unsharp(0, 4,3)
 				.resize(size+1, size, '!')
                 //.crop(size,size,0,0)
