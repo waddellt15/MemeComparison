@@ -420,7 +420,7 @@ function hashingCrop(url) {
 }
 function hashing(url) {
     var hashT = '';
-    var size = 8;
+    var size = 7;
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
