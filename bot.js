@@ -44,7 +44,7 @@ async function respond() {
     }
 }
 async function checkMeme(request, hashT, hashTCrop) {
-    console.log(hashT);
+    //console.log(hashT);
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
     var dynamo = new AWS.DynamoDB();
 	fCount = 0;
@@ -317,12 +317,7 @@ function findAllMessages(messageID) {
     var dynamo = new AWS.DynamoDB();
     HTTPS.get('https://api.groupme.com/v3/groups/31647877/messages?before_id=' + messageID + '&limit=100&token=' + process.env.GM_KEY, function (res) {
         if (res.statusCode == 200) {
-            //neat
-        } else {
-            console.log('rejecting bad status code ' + res.statusCode);
-            return;
-        }
-        data = '';
+			        data = '';
         //add the chunks to our var data
         res.on('data', function (chunk) {
             data += chunk;
@@ -383,6 +378,11 @@ function findAllMessages(messageID) {
             console.log(messageID);
             findAllMessages(mess[mess.length - 1].id);
         });
+        } 
+		else {
+            console.log('rejecting bad status code ' + res.statusCode);
+            findAllMessages(messageID);
+        }
 
     });
 }
