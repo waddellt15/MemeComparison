@@ -101,7 +101,7 @@ async function checkMeme(request, hashT, hashTCrop) {
             ':hash': { S: hashT.toString() } 
         }
     }		
-	var paramsCrop = {
+	/**var paramsCrop = {
         TableName: 'clarkteems3001',
         KeyConditionExpression: "#hash = :hash",
         ExpressionAttributeNames: {
@@ -110,7 +110,7 @@ async function checkMeme(request, hashT, hashTCrop) {
         ExpressionAttributeValues: {
             ':hash': { S: hashTCrop.toString() } 
         }
-    }
+    }**/
     console.log(request); 
 	if(fCount == 0) {
     dynamo.query(params, function (err, data) {
