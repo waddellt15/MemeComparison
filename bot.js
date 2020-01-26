@@ -449,6 +449,18 @@ function hashing(url) {
 							}
                         }
 						var baseVal = 0;
+						for (var i = 0; i < y; i++) {
+							for (var j = 0; j < x; j++) {
+								if (i%y != 0) {
+									if(ui32[i+(j*x)] < ui32[i+((j+1)*x)]){
+										Hashn += '1';
+									}
+									else{
+										Hashn += '0';
+									}				
+								}								
+							}
+						}
 					    console.log("Normal:")
                         console.log(Hashn)
                         Hashn = parseInt(Hashn, 2)
