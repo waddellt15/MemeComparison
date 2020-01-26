@@ -122,10 +122,14 @@ async function checkMeme(request, hashT, hashTCrop) {
 				addMeme(request, hashT);
 			}
 			else {
-				//reposter(request, data);
+				reposter(request, data);
 			}
 		}
 	});
+	}
+	else {
+		reposter(request, data);
+	}
 				
 /**			    dynamo.query(paramsCrop, function (err, data) {
 					if (err) {
@@ -147,7 +151,6 @@ async function checkMeme(request, hashT, hashTCrop) {
         }
     });**/
 	return Promise.resolve(1);
-	}
 }
 function reposter(request, original) {
     var botResponse, options, body, botReq;
