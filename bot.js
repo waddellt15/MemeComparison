@@ -33,6 +33,7 @@ async function respond() {
                 hashT = await hashing(request.attachments[j].url);
 				//hashTCrop = await hashingCrop(request.attachments[j].url);
                 retVal = await checkMeme(request, hashT, hashTCrop);
+				console.log(randomResponse());
             }
         }
 
