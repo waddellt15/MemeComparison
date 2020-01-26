@@ -390,8 +390,8 @@ function hashingCrop(url) {
 				.colorspace('Rec709Luma')
 				.filter('Catrom') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad. Cubic is amazing. Quadradtic no
 				//.unsharp(0, 4,3)
-				.resize(x+1, y+1, '!')
-                .crop(x+1,y,0,0)
+				.resize(x, y+1, '!')
+                .crop(x,y,0,0)
                 .write('reformat.png', function (err) {
                     if (!err) console.log("hashed");
                     PNG.decode('reformat.png', function (pixels) {
@@ -399,7 +399,7 @@ function hashingCrop(url) {
                         var Hashn = '';
 						//Hashing of first half
                         for (var i = 0; i < ui32.length; i++) {
-                            if (i%8 != 0) {
+                            if (i%x != 0) {
 								if(ui32[i] < ui32[i+1]){
 									Hashn += '1';
 								}
