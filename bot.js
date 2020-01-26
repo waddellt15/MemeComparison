@@ -110,7 +110,7 @@ async function checkMeme(request, hashT, hashTCrop) {
         ExpressionAttributeValues: {
             ':hash': { S: hashTCrop.toString() } 
         }
-    }*/
+    }**/
     console.log(request); 
 	if(fCount == 0) {
     dynamo.query(params, function (err, data) {
@@ -145,7 +145,7 @@ async function checkMeme(request, hashT, hashTCrop) {
                 //reposter(request, data);
             }
         }
-    });*/
+    });**/
 	return Promise.resolve(1);
 	}
 }
