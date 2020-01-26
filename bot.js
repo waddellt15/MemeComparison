@@ -390,8 +390,8 @@ function hashingCrop(url) {
 				.colorspace('Rec709Luma')
 				.filter('Catrom') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad. Cubic is amazing. Quadradtic no
 				//.unsharp(0, 4,3)
-				.resize(x, y+1, '!')
-                .crop(size+1,size,0,0)
+				.resize(x+1, y+1, '!')
+                .crop(x+1,y,0,0)
                 .write('reformat.png', function (err) {
                     if (!err) console.log("hashed");
                     PNG.decode('reformat.png', function (pixels) {
