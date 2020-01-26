@@ -26,7 +26,7 @@ async function respond() {
     }
     else if (Array.isArray(request.attachments) && request.attachments && request.attachments.length != 0) {
         for (j = 0; j < request.attachments.length; j++) {
-            if (request.attachments[j].type == "image" && !request.attachments[j].url.includes(".gif")) {
+            if (request.attachments[j].type == "image" && !request.attachments[j].url.includes(".gif") && !request.text.includes('@')){
                 var hashT = '';
 				var hashTCrop = '';
 				var retVal = '';
@@ -380,7 +380,9 @@ function sleep(ms) {
 }
 function hashingCrop(url) {
     var hashT = '';
-    var size = 7;
+    var size = 8;
+	var y = (size - 1);
+	var x = (size - 2);
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
@@ -388,7 +390,7 @@ function hashingCrop(url) {
 				.colorspace('Rec709Luma')
 				.filter('Catrom') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad. Cubic is amazing. Quadradtic no
 				//.unsharp(0, 4,3)
-				.resize(size+1, size+1, '!')
+				.resize(x, y+1, '!')
                 .crop(size+1,size,0,0)
                 .write('reformat.png', function (err) {
                     if (!err) console.log("hashed");
@@ -406,6 +408,19 @@ function hashingCrop(url) {
 								}
 							}
                         }
+						var baseVal = 0;
+						for (var i = 0; i < y; i++) {
+							for (var j = 0; j < x; j++) {
+								if (i%y != 0) {
+									if(ui32[i+(j*x)] < ui32[i+((j+1)*x)]){
+										Hashn += '1';
+									}
+									else{
+										Hashn += '0';
+									}				
+								}								
+							}
+						}
 						console.log("Cropped:")
 					    console.log(Hashn)
                         Hashn = parseInt(Hashn, 2)					                        
@@ -420,7 +435,7 @@ function hashingCrop(url) {
 }
 function hashing(url) {
     var hashT = '';
-    var size = 7;
+    var size = 8;
 	var y = (size - 1);
 	var x = (size - 2);
     return new Promise(resolve => {
