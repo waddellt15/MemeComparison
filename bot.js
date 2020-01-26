@@ -79,7 +79,7 @@ async function checkMeme(request, hashT, hashTCrop) {
 			}
 			else {
 				fCount++;
-				reposter(request, data);
+				//reposter(request, data);
 				console.log("CAUGHT")
 			}
 		}
@@ -128,13 +128,13 @@ async function checkMeme(request, hashT, hashTCrop) {
 							addMeme(request, hashT);
 						}
 						else {
-							reposter(request, data);
+							//reposter(request, data);
 						}
 					}
 				});
 			}
             else  {
-                reposter(request, data);
+                //reposter(request, data);
             }
         }
     });
@@ -386,7 +386,7 @@ function hashingCrop(url) {
             gm(request(url))
 			    .noProfile()
 				.colorspace('Rec709Luma')
-				.filter('Cubic') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad. Cubic is amazing. Quadradtic no
+				.filter('Catrom') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad. Cubic is amazing. Quadradtic no
 				//.unsharp(0, 4,3)
 				.resize(size+1, size+1, '!')
                 .crop(size+1,size,0,0)
@@ -421,6 +421,8 @@ function hashingCrop(url) {
 function hashing(url) {
     var hashT = '';
     var size = 7;
+	var y = (size - 1);
+	var x = (size - 2);
     return new Promise(resolve => {
         setTimeout(() => {
             gm(request(url))
@@ -428,7 +430,7 @@ function hashing(url) {
 				.colorspace('Rec709Luma')
 				.filter('Catrom') //Catrom worked pretty well. Sinc worked decent. Bessel is awful. Lanczos not great. Mitchell not bad. Cubic is amazing. Quadradtic no
 				//.unsharp(0, 4,3)
-				.resize(size+1, size, '!')
+				.resize(x, y, '!')
                 //.crop(size,size,0,0)
                 .write('reformat.png', function (err) {
                     if (!err) console.log("hashed");
@@ -437,7 +439,7 @@ function hashing(url) {
                         var Hashn = '';
 						//Hashing of first half
                         for (var i = 0; i < ui32.length; i++) {
-                            if (i%8 != 0) {
+                            if (i%x != 0) {
 								if(ui32[i] < ui32[i+1]){
 									Hashn += '1';
 								}
@@ -446,6 +448,19 @@ function hashing(url) {
 								}
 							}
                         }
+						var baseVal = 0;
+						for (var i = 0; i < y; i++) {
+							for (var j = 0; j < x; i++) {
+								if (i%y != 0) {
+									if(ui32[i+(j*x)] < ui32[i+((j+1)*x)]){
+										Hashn += '1';
+									}
+									else{
+										Hashn += '0';
+									}				
+								}								
+							}
+						}
 					    console.log("Normal:")
                         console.log(Hashn)
                         Hashn = parseInt(Hashn, 2)
