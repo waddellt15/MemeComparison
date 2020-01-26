@@ -119,7 +119,15 @@ async function checkMeme(request, hashT, hashTCrop) {
         } else {
             console.log(data.Count);
             if (data.Count == 0) {
-			    dynamo.query(paramsCrop, function (err, data) {
+				addMeme(request, hashT);
+			}
+			else {
+				reposter(request, data);
+			}
+		}
+	});
+				
+/**			    dynamo.query(paramsCrop, function (err, data) {
 					if (err) {
 						console.log("Error", err);
 					} else {
@@ -137,7 +145,7 @@ async function checkMeme(request, hashT, hashTCrop) {
                 //reposter(request, data);
             }
         }
-    });
+    });**/
 	return Promise.resolve(1);
 	}
 }
