@@ -33,7 +33,6 @@ async function respond() {
                 hashT = await hashing(request.attachments[j].url);
 				//hashTCrop = await hashingCrop(request.attachments[j].url);
                 retVal = await checkMeme(request, hashT, hashTCrop);
-				console.log(randomResponse());
             }
         }
 
@@ -193,10 +192,10 @@ function reposter(request, original) {
     console.log(original.Items[0].poster.S);
 }
 function randomResponse(){
-var resp = ["git gut","Honestly I dont know what to say","Your repost is bad and you should feel bad","Get better memes","Honestly dude, what the fuck?","What the fuck did you just repost about me you little bitch? I'll have you know i graduated top of my meme class in the Teems meme academy"];
-resp.push("can you fucking not?","This is why your mother doesn't love you","get rekt m8","leave the memes to the professional kid","This is a cry for help, I'm actually alive, please send someone","Did you even try?");
-resp.push("*insert generic repost response here*","can u not","nothing personal kid","Add me on linkdin?","pls mr pls","That wasn't very cash money of you","Try better next time loser");
-return resp[Math.floor(Math.random()*resp.length)];
+	var resp = ["git gut","Honestly I dont know what to say","Your repost is bad and you should feel bad","Get better memes","Honestly dude, what the fuck?","What the fuck did you just repost about me you little bitch? I'll have you know i graduated top of my meme class in the Teems meme academy"];
+	resp.push("can you fucking not?","This is why your mother doesn't love you","get rekt m8","leave the memes to the professional kid","This is a cry for help, I'm actually alive, please send someone","Did you even try?");
+	resp.push("*insert generic repost response here*","can u not","nothing personal kid","Add me on linkdin?","pls mr pls","That wasn't very cash money of you","Try better next time loser");
+	return resp[Math.floor(Math.random()*resp.length)];
 }
 function addMeme(request, hashT) {
     AWS.config.update({ region: 'us-east-2', accessKeyId: process.env.AWS_ACCESS_KEY_ID, secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY });
