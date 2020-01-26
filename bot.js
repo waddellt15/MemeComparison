@@ -31,7 +31,7 @@ async function respond() {
 				var hashTCrop = '';
 				var retVal = '';
                 hashT = await hashing(request.attachments[j].url);
-				hashTCrop = await hashingCrop(request.attachments[j].url);
+				//hashTCrop = await hashingCrop(request.attachments[j].url);
                 retVal = await checkMeme(request, hashT, hashTCrop);
             }
         }
